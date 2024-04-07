@@ -88,7 +88,7 @@ model Answer {
   answer     String // 答案内容
   isCorrect  Boolean // 是否是正确答案
   // 外键，关联到问题
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String   @db.ObjectId
 }
 
