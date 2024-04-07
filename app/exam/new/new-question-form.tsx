@@ -4,8 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { NewQuestionSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
-import { ChevronLeft, Upload } from "lucide-react";
+import { ChevronLeft, Loader2, Upload } from "lucide-react";
 import { Subject } from "@prisma/client";
 import { newQuestion } from "@/actions/question";
 import { useTransition } from "react";
@@ -38,6 +37,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
+import ImageUpload from "@/components/image-upload";
 
 interface Props {
   subjects: Subject[] | undefined;
@@ -53,6 +53,11 @@ const NewQuestionForm = ({ subjects }: Props) => {
         { answer: "", isCorrect: false },
         { answer: "", isCorrect: false },
       ],
+      type: "MCQ",
+      question: "",
+      explanation: "",
+      image: "",
+      subjectId: "",
     },
   });
 
@@ -60,6 +65,10 @@ const NewQuestionForm = ({ subjects }: Props) => {
     name: "answers",
     control: form.control,
   });
+
+  const handleReset = () => {
+    form.reset();
+  };
 
   const onSubmit = (values: z.infer<typeof NewQuestionSchema>) => {
     startTransition(() => {
@@ -85,7 +94,12 @@ const NewQuestionForm = ({ subjects }: Props) => {
           <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
             {/* HEADER  */}
             <div className="flex items-center gap-4">
-              <Button variant="outline" size="icon" className="h-7 w-7">
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-7 w-7"
+                disabled={isPending}
+              >
                 <ChevronLeft className="h-4 w-4" />
                 <span className="sr-only">Back</span>
               </Button>
@@ -96,11 +110,21 @@ const NewQuestionForm = ({ subjects }: Props) => {
                 In stock
               </Badge>
               <div className="hidden items-center gap-2 md:ml-auto md:flex">
-                <Button variant="outline" size="sm">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  onClick={handleReset}
+                  disabled={isPending}
+                >
                   Discard
                 </Button>
-                <Button size="sm" type="submit">
-                  Save Question
+                <Button size="sm" type="submit" disabled={isPending}>
+                  {isPending ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <span>Save Question</span>
+                  )}
                 </Button>
               </div>
             </div>
@@ -126,6 +150,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                               <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
+                                disabled={isPending}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -158,6 +183,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                               <Select
                                 onValueChange={field.onChange}
                                 defaultValue={field.value}
+                                disabled={isPending}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -192,7 +218,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                             <FormItem>
                               <FormLabel>Question</FormLabel>
                               <FormControl>
-                                <Textarea {...field} />
+                                <Textarea {...field} disabled={isPending} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -221,7 +247,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                             render={({ field }) => (
                               <FormItem className="w-full">
                                 <FormControl>
-                                  <Input {...field} />
+                                  <Input {...field} disabled={isPending} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -236,6 +262,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                                   <Switch
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
+                                    disabled={isPending}
                                   />
                                 </FormControl>
                               </FormItem>
@@ -251,6 +278,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                       size="sm"
                       className="mt-2"
                       onClick={() => append({ answer: "", isCorrect: false })}
+                      disabled={isPending}
                     >
                       Add Answer
                     </Button>
@@ -264,45 +292,26 @@ const NewQuestionForm = ({ subjects }: Props) => {
                   x-chunk="dashboard-07-chunk-4"
                 >
                   <CardHeader>
-                    <CardTitle>Product Images</CardTitle>
+                    <CardTitle>Question Images</CardTitle>
                     <CardDescription>
                       Lipsum dolor sit amet, consectetur adipiscing elit
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid gap-2">
-                      <Image
-                        alt="Product image"
-                        className="aspect-square w-full rounded-md object-cover"
-                        height="300"
-                        src="/placeholder.svg"
-                        width="300"
-                      />
-                      <div className="grid grid-cols-3 gap-2">
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="/placeholder.svg"
-                            width="84"
-                          />
-                        </button>
-                        <button>
-                          <Image
-                            alt="Product image"
-                            className="aspect-square w-full rounded-md object-cover"
-                            height="84"
-                            src="/placeholder.svg"
-                            width="84"
-                          />
-                        </button>
-                        <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
-                          <Upload className="h-4 w-4 text-muted-foreground" />
-                          <span className="sr-only">Upload</span>
-                        </button>
-                      </div>
-                    </div>
+                    <FormField
+                      control={form.control}
+                      name="image"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
                   </CardContent>
                 </Card>
                 <Card
@@ -311,7 +320,7 @@ const NewQuestionForm = ({ subjects }: Props) => {
                 >
                   <CardHeader>
                     <CardTitle>Explanation</CardTitle>
-                    <CardDescription>Explanation</CardDescription>
+                    <CardDescription>Explanation the answer</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-6 sm:grid-cols-4">
@@ -321,9 +330,8 @@ const NewQuestionForm = ({ subjects }: Props) => {
                           name="explanation"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Explanation</FormLabel>
                               <FormControl>
-                                <Textarea {...field} />
+                                <Textarea {...field} disabled={isPending} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -337,11 +345,21 @@ const NewQuestionForm = ({ subjects }: Props) => {
             </div>
             {/* SM BUTTON  */}
             <div className="flex items-center justify-center gap-2 md:hidden">
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                type="button"
+                onClick={handleReset}
+                disabled={isPending}
+              >
                 Discard
               </Button>
-              <Button size="sm" type="submit">
-                Save Question
+              <Button size="sm" type="submit" disabled={isPending}>
+                {isPending ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <span>Save Question</span>
+                )}
               </Button>
             </div>
           </div>

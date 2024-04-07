@@ -19,6 +19,8 @@ export const newQuestion = async (
         question: values.question,
         subjectId: values.subjectId,
         type: values.type,
+        image: values.image,
+        explanation: values.explanation,
       },
     });
 
