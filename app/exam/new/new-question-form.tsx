@@ -331,7 +331,11 @@ const NewQuestionForm = ({ subjects }: Props) => {
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Textarea {...field} disabled={isPending} />
+                                <Textarea
+                                  {...field}
+                                  disabled={isPending}
+                                  className="min-h-28"
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
