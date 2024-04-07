@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  name             String?
+  email            String?            @unique
+  emailVerified    DateTime?
+  image            String?
+  accounts         Account[]
+  sessions         Session[]
+  WrongQuestion    WrongQuestion[]
+  FavoriteQuestion FavoriteQuestion[]
+}
+
+model Subject {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  name      String // 科目名称
+  // 关联到题目的字段
+  questions Question[]
+}
+
+// 题目类型枚举
+enum QuestionType {
+  MCQ // 单选题
+  MRQ // 多选题
+  TRUE_FALSE // 判断题
+  SHORT_ANSWER // 简答题
+}
+
+// 题目模型
+model Question {
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  question         String // 题目内容
+  type             QuestionType // 题目类型
+  image            String? // 图片 URL
+  explanation      String? // 解析内容
+  // 答案字段
+  answers          Answer[]
+  WrongQuestion    WrongQuestion[]
+  FavoriteQuestion FavoriteQuestion[]
+  Subject          Subject            @relation(fields: [subjectId], references: [id])
+  subjectId        String             @db.ObjectId
+}
+
+// 答案模型
+model Answer {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  answer     String // 答案内容
+  isCorrect  Boolean // 是否是正确答案
+  // 外键，关联到问题
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String   @db.ObjectId
+}
+
+// 错题集模型
+model WrongQuestion {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  // 外键，关联到用户
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  // 外键，关联到题目
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String   @db.ObjectId
+}
+
+// 收藏集模型
+model FavoriteQuestion {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  // 外键，关联到用户
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  // 外键，关联到题目
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String   @db.ObjectId
+}
