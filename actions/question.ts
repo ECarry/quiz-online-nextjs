@@ -4,7 +4,9 @@ import { db } from "@/lib/db";
 import { NewQuestionSchema } from "@/schema";
 import { z } from "zod";
 
-export const newQuestion = async (values: z.infer<typeof NewQuestionSchema>) => {
+export const newQuestion = async (
+  values: z.infer<typeof NewQuestionSchema>
+) => {
   const validatedFields = NewQuestionSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -20,7 +22,22 @@ export const newQuestion = async (values: z.infer<typeof NewQuestionSchema>) => 
       },
     });
 
-    return { question, success: "Create successful" };
+    const answersToCreate = values.answers.map((answer) => ({
+      answer: answer.answer,
+      isCorrect: answer.isCorrect,
+      questionId: question.id,
+    }));
+
+    await db.answer.createMany({
+      data: answersToCreate,
+    });
+
+    const questionWithAnswers = await db.question.findUnique({
+      where: { id: question.id },
+      include: { answers: true },
+    });
+
+    return { questionWithAnswers, success: "Create successful" };
   } catch (error) {
     return { error: "Something wrong" };
   }

@@ -5,53 +5,21 @@ import { z } from "zod";
 import { NewQuestionSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-
-import {
-  ChevronLeft,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  Settings,
-  ShoppingCart,
-  Upload,
-  Users2,
-} from "lucide-react";
+import { ChevronLeft, Upload } from "lucide-react";
 import { Subject } from "@prisma/client";
 import { newQuestion } from "@/actions/question";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -59,17 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Form,
   FormControl,
@@ -79,6 +37,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { Switch } from "@/components/ui/switch";
 
 interface Props {
   subjects: Subject[] | undefined;
@@ -91,8 +50,8 @@ const NewQuestionForm = ({ subjects }: Props) => {
     resolver: zodResolver(NewQuestionSchema),
     defaultValues: {
       answers: [
-        { answer: "Answer 1", isCorrect: false },
-        { answer: "Answer 2", isCorrect: false },
+        { answer: "", isCorrect: false },
+        { answer: "", isCorrect: false },
       ],
     },
   });
@@ -103,7 +62,6 @@ const NewQuestionForm = ({ subjects }: Props) => {
   });
 
   const onSubmit = (values: z.infer<typeof NewQuestionSchema>) => {
-    console.log(values);
     startTransition(() => {
       newQuestion(values).then((data) => {
         if (data.error) {
@@ -112,8 +70,9 @@ const NewQuestionForm = ({ subjects }: Props) => {
           });
         } else if (data.success) {
           toast("Question has been created", {
-            description: data.question.question,
+            description: "Question has been created successfully",
           });
+          form.reset();
         }
       });
     });
@@ -246,21 +205,59 @@ const NewQuestionForm = ({ subjects }: Props) => {
                 {/* ANSWER  */}
                 <Card x-chunk="dashboard-07-chunk-1">
                   <CardHeader>
-                    <CardTitle>Answer</CardTitle>
-                    <CardDescription>
-                      Please create a new question first.
-                    </CardDescription>
+                    <CardTitle>Answers</CardTitle>
+                    <CardDescription>This is answer form</CardDescription>
                   </CardHeader>
-                  <CardContent></CardContent>
-                  <CardFooter className="justify-center border-t p-4">
-                    <Button size="sm" variant="ghost" className="gap-1">
-                      <PlusCircle className="h-3.5 w-3.5" />
-                      Add Variant
+                  <CardContent>
+                    <div className="flex flex-col gap-4">
+                      {fields.map((field, index) => (
+                        <div
+                          className="flex items-center gap-2 grid-cols-4"
+                          key={field.id}
+                        >
+                          <FormField
+                            control={form.control}
+                            name={`answers.${index}.answer`}
+                            render={({ field }) => (
+                              <FormItem className="w-full">
+                                <FormControl>
+                                  <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name={`answers.${index}.isCorrect`}
+                            render={({ field }) => (
+                              <FormItem className="col-span-1">
+                                <FormControl>
+                                  <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => append({ answer: "", isCorrect: false })}
+                    >
+                      Add Answer
                     </Button>
-                  </CardFooter>
+                  </CardContent>
                 </Card>
               </div>
-              {/* IMAGE  */}
+              {/* IMAGE & explanation  */}
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                 <Card
                   className="overflow-hidden"
@@ -304,6 +301,34 @@ const NewQuestionForm = ({ subjects }: Props) => {
                           <Upload className="h-4 w-4 text-muted-foreground" />
                           <span className="sr-only">Upload</span>
                         </button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card
+                  className="overflow-hidden"
+                  x-chunk="dashboard-07-chunk-4"
+                >
+                  <CardHeader>
+                    <CardTitle>Explanation</CardTitle>
+                    <CardDescription>Explanation</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-4">
+                      <div className="grid gap-3 col-span-4">
+                        <FormField
+                          control={form.control}
+                          name="explanation"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Explanation</FormLabel>
+                              <FormControl>
+                                <Textarea {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                     </div>
                   </CardContent>
