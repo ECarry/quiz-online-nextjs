@@ -40,12 +40,18 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id               String             @id @default(auto()) @map("_id") @db.ObjectId
   name             String?
   email            String?            @unique
   emailVerified    DateTime?
   image            String?
+  role             Role               @default(USER)
   accounts         Account[]
   sessions         Session[]
   WrongQuestion    WrongQuestion[]
@@ -53,13 +59,25 @@ model User {
 }
 
 model Subject {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  name      String // 科目名称
-  // 关联到题目的字段
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  image       String?
+
+  exams Exam[]
+}
+
+model Exam {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+
+  Subject   Subject? @relation(fields: [subjectId], references: [id])
+  subjectId String?  @db.ObjectId
+
   questions Question[]
 }
 
-// 题目类型枚举
 enum QuestionType {
   MCQ // 单选题
   MRQ // 多选题
@@ -69,47 +87,44 @@ enum QuestionType {
 
 // 题目模型
 model Question {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
-  question         String // 题目内容
-  type             QuestionType // 题目类型
-  image            String? // 图片 URL
-  explanation      String? // 解析内容
-  // 答案字段
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  question    String
+  type        QuestionType
+  image       String?
+  explanation String?
+
   answers          Answer[]
   WrongQuestion    WrongQuestion[]
   FavoriteQuestion FavoriteQuestion[]
-  Subject          Subject            @relation(fields: [subjectId], references: [id])
-  subjectId        String             @db.ObjectId
+  Exam             Exam               @relation(fields: [examId], references: [id])
+  examId           String             @db.ObjectId
 }
 
-// 答案模型
 model Answer {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  answer     String // 答案内容
-  isCorrect  Boolean // 是否是正确答案
-  // 外键，关联到问题
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  answer    String
+  isCorrect Boolean
+
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String   @db.ObjectId
 }
 
-// 错题集模型
 model WrongQuestion {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  // 外键，关联到用户
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @db.ObjectId
-  // 外键，关联到题目
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
   question   Question @relation(fields: [questionId], references: [id])
   questionId String   @db.ObjectId
 }
 
-// 收藏集模型
 model FavoriteQuestion {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  // 外键，关联到用户
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @db.ObjectId
-  // 外键，关联到题目
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
   question   Question @relation(fields: [questionId], references: [id])
   questionId String   @db.ObjectId
 }
