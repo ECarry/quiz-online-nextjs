@@ -71,11 +71,18 @@ model Subject {
   exams Exam[]
 }
 
+enum ExamStatus {
+  PUBLIC
+  PRIVATE
+  DRAFT
+}
+
 model Exam {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  slug        String  @unique
+  slug        String     @unique
   description String?
+  status      ExamStatus @default(DRAFT)
 
   Subject   Subject? @relation(fields: [subjectId], references: [id])
   subjectId String?  @db.ObjectId

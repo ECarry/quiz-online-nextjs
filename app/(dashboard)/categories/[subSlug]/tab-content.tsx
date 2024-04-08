@@ -19,10 +19,11 @@ import {
 import { Exam } from "@prisma/client";
 import formatDate from "@/lib/format-date";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   exams: Exam[] | undefined;
-  slug: string
+  slug: string;
 }
 
 const TabContent = ({ exams, slug }: Props) => {
@@ -35,6 +36,7 @@ const TabContent = ({ exams, slug }: Props) => {
           </TableHead>
           <TableHead>Name</TableHead>
           <TableHead className="hidden md:table-cell">Description</TableHead>
+          <TableHead>Status</TableHead>
           <TableHead>Total</TableHead>
           <TableHead className="hidden md:table-cell">Created at</TableHead>
           <TableHead className="hidden md:table-cell">Updated at</TableHead>
@@ -59,7 +61,10 @@ const TabContent = ({ exams, slug }: Props) => {
               <Link href={`/categories/${slug}/${exam.slug}`}>{exam.name}</Link>
             </TableCell>
             <TableCell className="hidden md:table-cell">desc</TableCell>
-            <TableCell className="hidden md:table-cell">2</TableCell>
+            <TableCell className="">
+              <Badge>{exam.status}</Badge>
+            </TableCell>
+            <TableCell className="">2</TableCell>
             <TableCell className="hidden md:table-cell">
               {formatDate(exam.createAt)}
             </TableCell>
