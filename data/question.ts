@@ -15,7 +15,7 @@ export const getCategoryBySlug = async (slug: string) => {
     const category = await db.subject.findUnique({
       where: {
         slug: slug,
-      }
+      },
     });
 
     return category;
@@ -38,12 +38,42 @@ export const getExamsById = async (id: string) => {
   }
 };
 
-
 export const getSubject = async () => {
   try {
     const subjects = await db.subject.findMany({});
 
     return subjects;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getExamBySlug = async (slug: string) => {
+  try {
+    const exam = await db.exam.findUnique({
+      where: {
+        slug: slug,
+      },
+    });
+
+    return exam;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getExamBySlugWithQuestion = async (slug: string) => {
+  try {
+    const exam = await db.exam.findUnique({
+      where: {
+        slug: slug,
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    return exam;
   } catch (error) {
     console.log(error);
   }

@@ -1,7 +1,20 @@
-import React from "react";
+import { getExamBySlugWithQuestion } from "@/data/question";
+import Tab from "./tab";
 
-const page = () => {
-  return <div>page</div>;
+interface Props {
+  params: {
+    examSlug: string;
+  };
+}
+const page = async ({ params }: Props) => {
+  const exam = await getExamBySlugWithQuestion(params.examSlug);
+  if (!exam) {
+    return null;
+  }
+
+  const questions = exam.questions;
+
+  return <Tab questions={questions} />;
 };
 
 export default page;

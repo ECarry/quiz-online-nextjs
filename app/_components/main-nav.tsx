@@ -3,31 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Home, Package2, School2, Users2 } from "lucide-react";
+import { Package2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-
-const links = [
-  {
-    href: "/dashboard",
-    label: "Dashboard",
-    icon: <Home className="h-5 w-5" />,
-  },
-  {
-    href: "/categories",
-    label: "Categories",
-    icon: <School2 className="h-5 w-5" />,
-  },
-  {
-    href: "/users",
-    label: "Users",
-    icon: <Users2 className="h-5 w-5" />,
-  },
-];
+import { links } from "./links";
 
 const MainNav = () => {
   const pathname = usePathname();

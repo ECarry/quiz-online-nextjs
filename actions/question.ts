@@ -86,7 +86,7 @@ export const newQuestion = async (
     const question = await db.question.create({
       data: {
         question: values.question,
-        examId: " ",
+        examId: values.examId,
         type: values.type,
         image: values.image,
         explanation: values.explanation,
@@ -110,6 +110,8 @@ export const newQuestion = async (
 
     return { questionWithAnswers, success: "Create successful" };
   } catch (error) {
+    console.log(error);
+
     return { error: "Something wrong" };
   }
 };
