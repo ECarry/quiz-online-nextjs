@@ -33,7 +33,7 @@ const Tab = ({ exams, id, slug }: Props) => {
   const { onOpen } = useModal();
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       <div className="flex items-center">
         <div className="ml-auto flex items-center gap-2">
           <DropdownMenu>
@@ -99,7 +99,7 @@ const Tab = ({ exams, id, slug }: Props) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
