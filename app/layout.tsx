@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils";
 import { auth } from "@/auth";
 
 import { SessionProvider } from "next-auth/react";
-import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,18 +29,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("font-sans antialiased", fontSans.variable)}>
         <SessionProvider session={session}>
           <ThemeProvider attribute="class" defaultTheme="system">
-            <Header />
-            <div className="flex items-center justify-between w-full max-w-7xl px-4 mx-auto sm:px-6 h-full">
-              {children}
-            </div>
+            <TooltipProvider>{children}</TooltipProvider>
             <ModalProvider />
             <Toaster />
           </ThemeProvider>
