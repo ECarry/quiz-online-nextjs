@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
-export type ModalType = "test";
+export type ModalType = "test" | "createCategory" | "createExam";
 
 interface ModalData {
-  data?: string;
+  id?: string;
 }
 
 interface ModalStore {

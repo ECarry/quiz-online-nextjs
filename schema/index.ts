@@ -1,5 +1,18 @@
 import { z } from "zod";
 
+export const CreateCategorySchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+});
+
+export const CreateExamSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  image: z.string().optional(),
+  subjectId: z.string(),
+});
+
 export const AnswerSchema = z.object({
   answer: z.string(),
   isCorrect: z.boolean(),

@@ -1,8 +1,77 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { NewQuestionSchema } from "@/schema";
+import {
+  CreateCategorySchema,
+  CreateExamSchema,
+  NewQuestionSchema,
+} from "@/schema";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
+
+export const createCategory = async (
+  valuse: z.infer<typeof CreateCategorySchema>
+) => {
+  const validatedFields = CreateCategorySchema.safeParse(valuse);
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const categoryExist = await db.subject.findFirst({
+    where: { name: valuse.name },
+  });
+
+  if (categoryExist) {
+    return { error: "Category already exist!" };
+  }
+
+  try {
+    const category = await db.subject.create({
+      data: {
+        slug: valuse.name.slice(0, 30).replace(/\s/g, "-").toLowerCase(),
+        ...valuse,
+      },
+    });
+
+    revalidatePath("/categories");
+
+    return { category, success: `${category.name} created successful.` };
+  } catch (error) {
+    console.log(error);
+
+    return { error: "Something wrong" };
+  }
+};
+
+export const createExam = async (valuse: z.infer<typeof CreateExamSchema>) => {
+  const validatedFields = CreateExamSchema.safeParse(valuse);
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const examExist = await db.exam.findFirst({
+    where: { name: valuse.name },
+  });
+
+  if (examExist) {
+    return { error: "Exam already exist!" };
+  }
+
+  try {
+    const exam = await db.exam.create({
+      data: {
+        slug: valuse.name.slice(0, 30).replace(/\s/g, "-").toLowerCase(),
+        ...valuse,
+      },
+    });
+
+    revalidatePath("/categories");
+
+    return { exam, success: `${exam.name} created successful.` };
+  } catch (error) {
+    return { error: "Something wrong" };
+  }
+};
 
 export const newQuestion = async (
   values: z.infer<typeof NewQuestionSchema>
@@ -17,7 +86,7 @@ export const newQuestion = async (
     const question = await db.question.create({
       data: {
         question: values.question,
-        subjectId: values.subjectId,
+        examId: " ",
         type: values.type,
         image: values.image,
         explanation: values.explanation,

@@ -61,8 +61,12 @@ model User {
 model Subject {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
+  slug        String  @unique
   description String?
   image       String?
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 
   exams Exam[]
 }
@@ -70,10 +74,14 @@ model Subject {
 model Exam {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
+  slug        String  @unique
   description String?
 
   Subject   Subject? @relation(fields: [subjectId], references: [id])
   subjectId String?  @db.ObjectId
+
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
 
   questions Question[]
 }
