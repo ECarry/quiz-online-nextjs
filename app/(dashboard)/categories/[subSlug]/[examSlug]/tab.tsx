@@ -67,10 +67,8 @@ const Tab = ({ questions }: Props) => {
       {questions && questions?.length > 0 ? (
         <Card x-chunk="dashboard-06-chunk-1">
           <CardHeader>
-            <CardTitle>Exams</CardTitle>
-            <CardDescription>
-              Manage your Exams and view their questions.
-            </CardDescription>
+            <CardTitle>Questions</CardTitle>
+            <CardDescription>Manage your Questions.</CardDescription>
           </CardHeader>
           <CardContent>
             <TabContent questions={questions} />

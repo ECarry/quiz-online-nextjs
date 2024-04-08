@@ -5,9 +5,9 @@ import { z } from "zod";
 import { NewQuestionSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, CircleMinus, Loader2 } from "lucide-react";
-import { Subject } from "@prisma/client";
 import { newQuestion } from "@/actions/question";
 import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,6 +46,7 @@ interface Props {
 
 const NewQuestionForm = ({ examId, examName }: Props) => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof NewQuestionSchema>>({
     resolver: zodResolver(NewQuestionSchema),
@@ -99,7 +100,9 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                 variant="outline"
                 size="icon"
                 className="h-7 w-7"
+                type="button"
                 disabled={isPending}
+                onClick={router.back}
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span className="sr-only">Back</span>
