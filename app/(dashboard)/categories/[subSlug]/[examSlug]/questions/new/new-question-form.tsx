@@ -4,7 +4,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { NewQuestionSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { ChevronLeft, CircleMinus, Loader2 } from "lucide-react";
 import { Subject } from "@prisma/client";
 import { newQuestion } from "@/actions/question";
 import { useTransition } from "react";
@@ -62,7 +62,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
     },
   });
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: "answers",
     control: form.control,
   });
@@ -200,7 +200,11 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                             <FormItem>
                               <FormLabel>Question</FormLabel>
                               <FormControl>
-                                <Textarea {...field} disabled={isPending} />
+                                <Textarea
+                                  {...field}
+                                  disabled={isPending}
+                                  className="min-h-[120px]"
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -220,7 +224,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                     <div className="flex flex-col gap-4">
                       {fields.map((field, index) => (
                         <div
-                          className="flex items-center gap-2 grid-cols-4"
+                          className="flex items-center gap-4 grid-cols-4"
                           key={field.id}
                         >
                           <FormField
@@ -249,6 +253,12 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                                 </FormControl>
                               </FormItem>
                             )}
+                          />
+
+                          <CircleMinus
+                            size={28}
+                            onClick={() => remove(index)}
+                            className="text-primary cursor-pointer text-rose-500"
                           />
                         </div>
                       ))}
