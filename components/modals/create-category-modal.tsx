@@ -4,7 +4,7 @@ import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useModal } from "@/hooks/use-modal-store";
-import { CreateCategorySchema } from "@/schema";
+import { CreateCategorySchema } from "@/schemas";
 import { useTransition, useState } from "react";
 import { createCategory } from "@/actions/question";
 

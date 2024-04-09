@@ -5,7 +5,7 @@ import {
   CreateCategorySchema,
   CreateExamSchema,
   NewQuestionSchema,
-} from "@/schema";
+} from "@/schemas";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 

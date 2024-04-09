@@ -2,7 +2,7 @@
 
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { NewQuestionSchema } from "@/schema";
+import { NewQuestionSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, CircleMinus, Loader2 } from "lucide-react";
 import { newQuestion } from "@/actions/question";

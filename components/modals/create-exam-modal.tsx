@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useModal } from "@/hooks/use-modal-store";
-import { CreateExamSchema } from "@/schema";
+import { CreateExamSchema } from "@/schemas";
 import { useTransition, useState, useEffect } from "react";
 
 import {
