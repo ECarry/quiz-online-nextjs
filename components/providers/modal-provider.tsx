@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import TestModal from "../modals/test-modal";
+
 import CreateCategoryModal from "../modals/create-category-modal";
 import CreateExamModal from "../modals/create-exam-modal";
 import EditCategoryModal from "../modals/edit-category-modal";
@@ -19,7 +19,6 @@ export const ModalProvider = () => {
 
   return (
     <>
-      <TestModal />
       <CreateCategoryModal />
       <CreateExamModal />
       <EditCategoryModal />
