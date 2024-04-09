@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default async function RootLayout({
             <Toaster />
           </ThemeProvider>
         </SessionProvider>
+        <TailwindIndicator />
       </body>
     </html>
   );

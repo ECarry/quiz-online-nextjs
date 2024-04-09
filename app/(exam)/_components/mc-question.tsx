@@ -48,7 +48,7 @@ const MCQuestion = ({ questions }: Props) => {
       </div>
 
       <div className="flex flex-col items-start gap-4 min-h-[300px]">
-        <h1 className="text-xl font-bold">
+        <h1 className="md:text-xl font-bold">
           {currentQuestionIndex + 1}、{currentQuestion.question}
         </h1>
         <RadioGroup defaultValue="comfortable" className="space-y-4">
