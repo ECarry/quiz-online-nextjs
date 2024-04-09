@@ -76,6 +76,34 @@ export const getExamBySlug = async (slug: string) => {
   }
 };
 
+export const getQuestionsByExamSlug = async (slug: string) => {
+  try {
+    const exam = await db.exam.findUnique({
+      where: {
+        slug: slug,
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    if (!exam) return [];
+
+    const questions = await db.question.findMany({
+      where: {
+        examId: exam.id,
+      },
+      include: {
+        answers: true,
+      },
+    });
+
+    return questions;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getExamBySlugWithQuestion = async (slug: string) => {
   try {
     const exam = await db.exam.findUnique({
