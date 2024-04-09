@@ -10,6 +10,20 @@ export const getCategory = async () => {
   }
 };
 
+export const getCategoryWithExams = async () => {
+  try {
+    const categories = await db.subject.findMany({
+      include: {
+        exams: true,
+      },
+    });
+
+    return categories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getCategoryBySlug = async (slug: string) => {
   try {
     const category = await db.subject.findUnique({

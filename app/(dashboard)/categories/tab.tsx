@@ -21,15 +21,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Subject } from "@prisma/client";
+import { Exam, Subject } from "@prisma/client";
 import TabContent from "./tab-content";
 
+interface SubjectWithExams extends Subject {
+  exams: Exam[];
+}
+
 interface Props {
-  categories: Subject[] | undefined;
+  categories: SubjectWithExams[] | undefined;
 }
 
 const Tab = ({ categories }: Props) => {
   const { onOpen } = useModal();
+
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center">

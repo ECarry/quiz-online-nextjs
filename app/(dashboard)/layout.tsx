@@ -1,5 +1,5 @@
-import AsideBar from "../_components/aside-bar";
-import HeaderBar from "../_components/header-bar";
+import AsideBar from "./_components/aside-bar";
+import HeaderBar from "./_components/header-bar";
 
 const DashboardLayout = ({
   children,

@@ -5,6 +5,15 @@ import GitHub from "next-auth/providers/github";
 export default {
   providers: [
     GitHub({
+      // profile(profile) {
+      //   console.log("Profile GitHub", profile);
+
+      //   return {
+      //     ...profile,
+      //     id: profile.id.toString(),
+      //     role: "USER",
+      //   };
+      // },
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),

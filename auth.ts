@@ -5,14 +5,14 @@ import { db } from "./lib/db";
 import { Role } from "@prisma/client";
 
 // https://authjs.dev/getting-started/typescript
-declare module "@auth/core/types" {
-  interface Session {
-    user: {
-      id: string;
-      role: Role;
-    } & DefaultSession["user"];
-  }
-}
+// declare module "@auth/core/types" {
+//   interface Session {
+//     user: {
+//       id: string;
+//       role: Role;
+//     } & DefaultSession["user"];
+//   }
+// }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),

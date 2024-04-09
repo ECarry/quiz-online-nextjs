@@ -18,7 +18,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
           src={value}
           fill
           alt="upload image"
-          className="object-cover rounded-md"
+          className="object-contain rounded-md"
         />
         <button
           onClick={() => onChange("")}

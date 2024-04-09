@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Social from "@/components/auth/social";
 
 const LoginPage = () => {
   return (
@@ -15,12 +16,10 @@ const LoginPage = () => {
             <p className="text-balance text-muted-foreground">Welcome back!</p>
           </div>
           <div className="grid gap-4">
-            <Button variant="outline" className="w-full">
-              Login with Google
-            </Button>
+            <Social />
           </div>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account? Just login
           </div>
         </div>
       </div>

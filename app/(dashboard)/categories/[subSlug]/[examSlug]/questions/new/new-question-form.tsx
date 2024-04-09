@@ -6,7 +6,7 @@ import { NewQuestionSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, CircleMinus, Loader2 } from "lucide-react";
 import { newQuestion } from "@/actions/question";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
@@ -44,6 +44,8 @@ interface Props {
   examName: string;
 }
 
+const initialAnswerValues = { answer: "", isCorrect: false };
+
 const NewQuestionForm = ({ examId, examName }: Props) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -51,10 +53,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
   const form = useForm<z.infer<typeof NewQuestionSchema>>({
     resolver: zodResolver(NewQuestionSchema),
     defaultValues: {
-      answers: [
-        { answer: "", isCorrect: false },
-        { answer: "", isCorrect: false },
-      ],
+      answers: [initialAnswerValues, initialAnswerValues],
       type: "MCQ",
       question: "",
       explanation: "",
@@ -83,7 +82,14 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
           toast("Question has been created", {
             description: "Question has been created successfully",
           });
-          form.reset();
+          form.reset({
+            answers: [
+              { answer: "", isCorrect: false },
+              { answer: "", isCorrect: false },
+            ],
+            question: "",
+            explanation: "",
+          });
         }
       });
     });
@@ -123,7 +129,12 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                 >
                   Discard
                 </Button>
-                <Button size="sm" type="submit" disabled={isPending}>
+                <Button
+                  size="sm"
+                  type="submit"
+                  disabled={isPending}
+                  className="w-[100px]"
+                >
                   {isPending ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (

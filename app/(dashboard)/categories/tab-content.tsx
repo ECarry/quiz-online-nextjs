@@ -17,15 +17,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Subject } from "@prisma/client";
+import { Exam, Subject } from "@prisma/client";
 import formatDate from "@/lib/format-date";
 import Link from "next/link";
+import { useModal } from "@/hooks/use-modal-store";
+
+interface SubjectWithExams extends Subject {
+  exams: Exam[];
+}
 
 interface Props {
-  categories: Subject[] | undefined;
+  categories: SubjectWithExams[] | undefined;
 }
 
 const TabContent = ({ categories }: Props) => {
+  const { onOpen } = useModal();
   return (
     <Table>
       <TableHeader>
@@ -50,14 +56,16 @@ const TabContent = ({ categories }: Props) => {
                 alt="Product image"
                 className="aspect-square rounded-md object-cover"
                 height="64"
-                src="/placeholder.svg"
+                src={category.image || "/placeholder.svg"}
                 width="64"
               />
             </TableCell>
             <TableCell className="font-medium group">
               <Link href={`/categories/${category.slug}`}>{category.name}</Link>
             </TableCell>
-            <TableCell className="hidden md:table-cell">2</TableCell>
+            <TableCell className="hidden md:table-cell">
+              {category.exams.length}
+            </TableCell>
             <TableCell className="hidden md:table-cell">
               {formatDate(category.createAt)}
             </TableCell>
@@ -74,8 +82,18 @@ const TabContent = ({ categories }: Props) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => onOpen("editCategory", { category })}
+                  >
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    Delete
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

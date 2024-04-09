@@ -1,8 +1,8 @@
-import { getCategory } from "@/data/question";
+import { getCategoryWithExams } from "@/data/question";
 import Tab from "./tab";
 
 const CategoriesPage = async () => {
-  const categories = await getCategory();
+  const categories = await getCategoryWithExams();
 
   return <Tab categories={categories} />;
 };

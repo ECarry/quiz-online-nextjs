@@ -62,7 +62,11 @@ const TabContent = ({ exams, slug }: Props) => {
             </TableCell>
             <TableCell className="hidden md:table-cell">desc</TableCell>
             <TableCell className="">
-              <Badge>{exam.status}</Badge>
+              <Badge
+                variant={exam.status === "DRAFT" ? "destructive" : "default"}
+              >
+                {exam.status}
+              </Badge>
             </TableCell>
             <TableCell className="">2</TableCell>
             <TableCell className="hidden md:table-cell">

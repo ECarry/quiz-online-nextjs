@@ -43,6 +43,43 @@ export const createCategory = async (
   }
 };
 
+export const updateCategory = async (
+  valuse: z.infer<typeof CreateCategorySchema>,
+  id: string
+) => {
+  const validatedFields = CreateCategorySchema.safeParse(valuse);
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const existingCategory = await db.subject.findUnique({
+    where: { id },
+  });
+
+  if (!existingCategory) {
+    return { error: "Category not found!" };
+  }
+
+  try {
+    const category = await db.subject.update({
+      where: {
+        id,
+      },
+      data: {
+        ...valuse,
+      },
+    });
+
+    revalidatePath("/categories");
+
+    return { category, success: `${category.name} updated successful.` };
+  } catch (error) {
+    console.log(error);
+
+    return { error: "Something wrong" };
+  }
+};
+
 export const createExam = async (valuse: z.infer<typeof CreateExamSchema>) => {
   const validatedFields = CreateExamSchema.safeParse(valuse);
   if (!validatedFields.success) {
