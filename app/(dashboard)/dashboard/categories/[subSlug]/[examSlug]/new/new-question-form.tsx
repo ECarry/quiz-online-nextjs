@@ -53,7 +53,12 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
   const form = useForm<z.infer<typeof NewQuestionSchema>>({
     resolver: zodResolver(NewQuestionSchema),
     defaultValues: {
-      answers: [initialAnswerValues, initialAnswerValues],
+      answers: [
+        initialAnswerValues,
+        initialAnswerValues,
+        initialAnswerValues,
+        initialAnswerValues,
+      ],
       type: "MCQ",
       question: "",
       explanation: "",
@@ -69,6 +74,24 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
 
   const handleReset = () => {
     form.reset();
+  };
+
+  const handleTypeChange = (type: string) => {
+    if (type === "TRUE_FALSE") {
+      form.setValue("answers", [
+        { answer: "True", isCorrect: false },
+        { answer: "False", isCorrect: false },
+      ]);
+    } else if (type === "MCQ" || type === "MRQ") {
+      form.setValue("answers", [
+        initialAnswerValues,
+        initialAnswerValues,
+        initialAnswerValues,
+        initialAnswerValues,
+      ]);
+    } else if (type === "SHORT_ANSWER") {
+      form.setValue("answers", [initialAnswerValues]);
+    }
   };
 
   const onSubmit = (values: z.infer<typeof NewQuestionSchema>) => {
@@ -199,7 +222,10 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                             <FormItem>
                               <FormLabel>Type</FormLabel>
                               <Select
-                                onValueChange={field.onChange}
+                                onValueChange={(values) => {
+                                  handleTypeChange(values);
+                                  field.onChange(values);
+                                }}
                                 defaultValue={field.value}
                                 disabled={isPending}
                               >
@@ -291,26 +317,29 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                               </FormItem>
                             )}
                           />
-
-                          <CircleMinus
-                            size={28}
-                            onClick={() => remove(index)}
-                            className="text-primary cursor-pointer text-rose-500"
-                          />
+                          {form.getValues("type") !== "TRUE_FALSE" && (
+                            <CircleMinus
+                              size={28}
+                              onClick={() => remove(index)}
+                              className="text-primary cursor-pointer text-rose-500"
+                            />
+                          )}
                         </div>
                       ))}
                     </div>
 
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="mt-2"
-                      onClick={() => append({ answer: "", isCorrect: false })}
-                      disabled={isPending}
-                    >
-                      Add Answer
-                    </Button>
+                    {form.getValues("type") !== "TRUE_FALSE" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() => append({ answer: "", isCorrect: false })}
+                        disabled={isPending}
+                      >
+                        Add Answer
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               </div>
