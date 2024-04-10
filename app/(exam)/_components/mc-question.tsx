@@ -80,7 +80,7 @@ const MCQuestion = ({ questions }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
+    <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-bold">单选题</h3>
         <h3 className="text-xl">
