@@ -92,6 +92,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
             question: "",
             explanation: "",
           });
+          router.refresh();
         }
       });
     });
