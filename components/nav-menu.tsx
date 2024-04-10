@@ -27,7 +27,7 @@ export function NavMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="z-10">
         {user ? (
           <div className="flex h-8 md:h-11 items-center gap-x-0 md:gap-x-2 rounded-full w-8 md:w-20 cursor-pointer justify-between pl-0 md:pl-[6px] pr-0 md:pr-[14px] border-0 md:border hover:bg-primary-foreground">
             <Image
@@ -37,7 +37,7 @@ export function NavMenu() {
               height={32}
               className="size-8 rounded-full"
             />
-            <Icons.menu className="size-4 hidden md:block" />
+            <Icons.menu className="size-4 hidden md:block dark:text-white" />
           </div>
         ) : (
           <Button
@@ -45,7 +45,7 @@ export function NavMenu() {
             size="lg"
             className="w-11 px-0 cursor-pointer"
           >
-            <Icons.menu className="size-4" />
+            <Icons.menu className="size-4 dark:text-white" />
           </Button>
         )}
       </DropdownMenuTrigger>

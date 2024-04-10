@@ -61,7 +61,9 @@ const TabContent = ({ categories }: Props) => {
               />
             </TableCell>
             <TableCell className="font-medium group">
-              <Link href={`/categories/${category.slug}`}>{category.name}</Link>
+              <Link href={`/dashboard/categories/${category.slug}`}>
+                {category.name}
+              </Link>
             </TableCell>
             <TableCell className="hidden md:table-cell">
               {category.exams.length}

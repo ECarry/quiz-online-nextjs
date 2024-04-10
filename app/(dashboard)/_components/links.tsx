@@ -1,4 +1,4 @@
-import { Home, Package2, School2, Users2 } from "lucide-react";
+import { Home, LibraryBig, Users2 } from "lucide-react";
 
 export const links = [
   {
@@ -7,12 +7,12 @@ export const links = [
     icon: <Home className="h-5 w-5" />,
   },
   {
-    href: "/categories",
+    href: "/dashboard/categories",
     label: "Categories",
-    icon: <School2 className="h-5 w-5" />,
+    icon: <LibraryBig className="h-5 w-5" />,
   },
   {
-    href: "/users",
+    href: "/dashboard/users",
     label: "Users",
     icon: <Users2 className="h-5 w-5" />,
   },

@@ -54,7 +54,7 @@ const Tab = ({ questions }: Props) => {
             </DropdownMenuContent>
           </DropdownMenu>
           <Button size="sm" className="h-7 gap-1" asChild>
-            <Link href={`${pathname}/questions/new`}>
+            <Link href={`${pathname}/new`}>
               <PlusCircle className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Add Question
@@ -89,7 +89,7 @@ const Tab = ({ questions }: Props) => {
           </p>
           <div className="flex w-[240px] flex-col items-stretch">
             <Button asChild>
-              <Link href={`${pathname}/questions/new`}>Create a Question</Link>
+              <Link href={`${pathname}/new`}>Create a Question</Link>
             </Button>
           </div>
         </div>

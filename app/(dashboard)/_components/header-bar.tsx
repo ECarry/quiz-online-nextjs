@@ -7,8 +7,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { RxPencil2 } from "react-icons/rx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import UserButton from "@/components/user-button";
-import Bread from "./bread";
+import NextBreadcrumb from "./next-breadcrumb";
+import { NavMenu } from "@/components/nav-menu";
 
 const HeaderBar = () => {
   return (
@@ -44,7 +44,7 @@ const HeaderBar = () => {
           </nav>
         </SheetContent>
       </Sheet>
-      <Bread />
+      <NextBreadcrumb />
       <div className="relative ml-auto flex-1 md:grow-0">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
@@ -54,7 +54,7 @@ const HeaderBar = () => {
         />
       </div>
       {/* USERBUTTON  */}
-      <UserButton />
+      <NavMenu />
     </header>
   );
 };
