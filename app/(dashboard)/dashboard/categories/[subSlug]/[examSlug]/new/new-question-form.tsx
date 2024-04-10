@@ -72,6 +72,26 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
   };
 
   const onSubmit = (values: z.infer<typeof NewQuestionSchema>) => {
+    if (
+      (values.type === "MCQ" || values.type === "MRQ") &&
+      values.answers.length === 2
+    ) {
+      toast({
+        variant: "destructive",
+        title:
+          "Multiple Choice/Response question must have more than 2 answers",
+      });
+
+      return;
+    }
+    if (form.getValues("type") === "TRUE_FALSE" && values.answers.length > 2) {
+      toast({
+        variant: "destructive",
+        title: "True/False question can only have 2 answers",
+      });
+
+      return;
+    }
     startTransition(() => {
       newQuestion(values).then((data) => {
         if (data.error) {
