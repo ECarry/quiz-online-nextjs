@@ -1,22 +1,13 @@
 import Link from "next/link";
+import { links } from "./links";
+import { cn } from "@/lib/utils";
 
-import {
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
+import { PanelLeft, Search } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
+import { RxPencil2 } from "react-icons/rx";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import UserButton from "@/components/user-button";
-import { links } from "./links";
-import { cn } from "@/lib/utils";
 import Bread from "./bread";
 
 const HeaderBar = () => {
@@ -32,11 +23,11 @@ const HeaderBar = () => {
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="#"
+              href="/dashboard"
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
-              <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
+              <RxPencil2 className="h-5 w-5 transition-all group-hover:scale-110" />
+              <span className="sr-only">Exam</span>
             </Link>
             {links.map((link) => (
               <Link
