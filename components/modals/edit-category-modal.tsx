@@ -1,6 +1,6 @@
 "use client";
 
-import { set, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useModal } from "@/hooks/use-modal-store";
@@ -28,8 +28,8 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../image-upload";
 import FormError from "../form-error";
-import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { toast } from "../ui/use-toast";
 
 const EditCategoryModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -71,8 +71,9 @@ const EditCategoryModal = () => {
         if (data.error) {
           setError(data.error);
         } else if (data.success) {
-          toast("Successful!", {
-            description: data.success,
+          toast({
+            variant: "success",
+            title: data.success,
           });
           setError("");
           form.reset();

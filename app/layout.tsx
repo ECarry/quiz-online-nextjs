@@ -6,10 +6,10 @@ import { auth } from "@/auth";
 
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],

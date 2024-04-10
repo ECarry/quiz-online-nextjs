@@ -27,9 +27,9 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../image-upload";
 import FormError from "../form-error";
-import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { createExam } from "@/actions/question";
+import { toast } from "../ui/use-toast";
 
 const CreateExamModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -52,11 +52,14 @@ const CreateExamModal = () => {
         if (data.error) {
           setError(data.error);
         }
-        toast("Successful!", {
-          description: data.success,
-        });
-        form.reset();
-        onClose();
+        if (data.success) {
+          toast({
+            variant: "success",
+            title: data.success,
+          });
+          form.reset();
+          onClose();
+        }
       });
     });
   }

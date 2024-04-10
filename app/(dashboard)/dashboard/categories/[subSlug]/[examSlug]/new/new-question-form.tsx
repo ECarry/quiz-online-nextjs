@@ -6,7 +6,7 @@ import { NewQuestionSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronLeft, CircleMinus, Loader2 } from "lucide-react";
 import { newQuestion } from "@/actions/question";
-import { useEffect, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
@@ -35,9 +35,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import ImageUpload from "@/components/image-upload";
+import { toast } from "@/components/ui/use-toast";
 
 interface Props {
   examId: string;
@@ -75,12 +75,14 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
     startTransition(() => {
       newQuestion(values).then((data) => {
         if (data.error) {
-          toast("Something wrong!", {
-            description: data.error,
+          toast({
+            variant: "destructive",
+            title: data.error,
           });
         } else if (data.success) {
-          toast("Question has been created", {
-            description: "Question has been created successfully",
+          toast({
+            variant: "success",
+            title: data.success,
           });
           form.reset({
             answers: [
@@ -247,7 +249,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                             render={({ field }) => (
                               <FormItem className="w-full">
                                 <FormControl>
-                                  <Input {...field} disabled={isPending} />
+                                  <Textarea {...field} disabled={isPending} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
