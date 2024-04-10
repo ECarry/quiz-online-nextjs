@@ -1,11 +1,5 @@
-import UserButton from "@/components/user-button";
+import { NavMenu } from "@/components/nav-menu";
 
 export default async function Home() {
-  return (
-    <main>
-      <header>
-        <UserButton />
-      </header>
-    </main>
-  );
+  return <div></div>;
 }
