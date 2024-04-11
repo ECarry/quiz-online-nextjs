@@ -20,13 +20,7 @@ const Challenge = ({
   type,
 }: ChallengeProps) => {
   return (
-    <div
-      className={cn(
-        type !== "SHORT_ANSWER"
-          ? "grid-cols-1"
-          : "grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))]"
-      )}
-    >
+    <div className={cn("grid gap-2  grid-cols-1")}>
       {answers.map((answer, i) => (
         <Card
           key={answer.id}

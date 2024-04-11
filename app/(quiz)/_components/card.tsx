@@ -36,7 +36,9 @@ const Card = ({
         disabled && "opacity-50 cursor-not-allowed"
       )}
     >
-      <div className="relative mb-4 max-h-[80px] lg:max-h-[150px] w-full"></div>
+      <div className="relative max-h-[80px] lg:max-h-[150px] w-full">
+        <p className="text-neutral-600 text-sm lg:text-base">{text}</p>
+      </div>
     </div>
   );
 };
