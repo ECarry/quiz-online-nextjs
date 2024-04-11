@@ -38,6 +38,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import ImageUpload from "@/components/image-upload";
 import { toast } from "@/components/ui/use-toast";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface Props {
   examId: string;
@@ -129,11 +130,15 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
           });
           form.reset({
             answers: [
-              { answer: "", isCorrect: false },
-              { answer: "", isCorrect: false },
+              initialAnswerValues,
+              initialAnswerValues,
+              initialAnswerValues,
+              initialAnswerValues,
             ],
             question: "",
             explanation: "",
+            image: "",
+            type: "MCQ",
           });
           router.refresh();
         }
@@ -219,36 +224,38 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                           control={form.control}
                           name="type"
                           render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Type</FormLabel>
-                              <Select
-                                onValueChange={(values) => {
-                                  handleTypeChange(values);
-                                  field.onChange(values);
-                                }}
-                                defaultValue={field.value}
-                                disabled={isPending}
-                              >
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Select type" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="MCQ">
-                                    Multiple Choice Question
-                                  </SelectItem>
-                                  <SelectItem value="MRQ">
-                                    Multiple Response Question
-                                  </SelectItem>
-                                  <SelectItem value="TRUE_FALSE">
-                                    True/False Question
-                                  </SelectItem>
-                                  <SelectItem value="SHORT_ANSWER">
-                                    Short Answer Question
-                                  </SelectItem>
-                                </SelectContent>
-                              </Select>
+                            <FormItem className="space-y-3">
+                              <FormLabel>Type(MCQ MRQ T/F SAQ)</FormLabel>
+                              <FormControl>
+                                <RadioGroup
+                                  onValueChange={(values) => {
+                                    field.onChange(values);
+                                    handleTypeChange(values);
+                                  }}
+                                  className="flex items-center justify-between"
+                                >
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="MCQ" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="MRQ" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="TRUE_FALSE" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="SHORT_ANSWER" />
+                                    </FormControl>
+                                  </FormItem>
+                                </RadioGroup>
+                              </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}

@@ -1,7 +1,11 @@
 import { Subject } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "createCategory" | "createExam" | "editCategory";
+export type ModalType =
+  | "createCategory"
+  | "createExam"
+  | "editCategory"
+  | "exit";
 
 interface ModalData {
   id?: string;

@@ -8,7 +8,7 @@ const QuizPage = async () => {
   if (!questions) {
     redirect("/mian");
   }
-  return <Quiz />;
+  return <Quiz questions={questions} />;
 };
 
 export default QuizPage;

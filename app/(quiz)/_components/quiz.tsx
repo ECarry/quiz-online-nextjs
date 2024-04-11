@@ -1,11 +1,64 @@
 "use client";
 
+import { Answer, Question } from "@prisma/client";
 import Header from "./header";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import QuestionBubble from "./question-bubble";
+import Challenge from "./challenge";
 
-const Quiz = () => {
+interface QuestionWithAnswer extends Question {
+  answers: Answer[];
+}
+
+interface Props {
+  questions: QuestionWithAnswer[];
+}
+
+const Quiz = ({ questions }: Props) => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  const currentQuestionData = questions[currentQuestionIndex];
+
+  const BadgeType = () => {
+    switch (currentQuestionData.type) {
+      case "MCQ":
+        return <Badge>单选题</Badge>;
+      case "MRQ":
+        return <Badge variant="destructive">多选题</Badge>;
+      case "TRUE_FALSE":
+        return <Badge variant="outline">判断题</Badge>;
+      case "SHORT_ANSWER":
+        return <Badge variant="secondary">简答题</Badge>;
+    }
+  };
+
   return (
     <>
       <Header />
+      <div className="flex-1">
+        <div className="h-full flex items-center justify-center">
+          <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col lg:gap-y-12 gap-y-6">
+            <div className="flex items-center justify-center">
+              <BadgeType />
+            </div>
+            {/* <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
+              {currentQuestionIndex + 1}、{currentQuestionData.question}
+            </h1> */}
+            <div className="">
+              <QuestionBubble question={currentQuestionData.question} />
+              <Challenge
+                answers={currentQuestionData.answers}
+                onSelect={() => {}}
+                status="none"
+                selectedAnswer={undefined}
+                disabled={false}
+                type={currentQuestionData.type}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
