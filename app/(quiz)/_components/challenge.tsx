@@ -6,7 +6,7 @@ interface ChallengeProps {
   answers: Answer[];
   onSelect: (id: string) => void;
   status: "correct" | "wrong" | "none";
-  selectedAnswer?: string;
+  selectedOption?: string;
   disabled?: boolean;
   type: QuestionType;
 }
@@ -15,7 +15,7 @@ const Challenge = ({
   answers,
   onSelect,
   status,
-  selectedAnswer,
+  selectedOption,
   disabled,
   type,
 }: ChallengeProps) => {
@@ -26,11 +26,12 @@ const Challenge = ({
           key={answer.id}
           id={answer.id}
           text={answer.answer}
-          shortcut={`${i} + 1`}
-          onClick={() => {}}
+          shortcut={i + 1}
+          onClick={() => onSelect(answer.id)}
           type={type}
           status={status}
-          selected={selectedAnswer === answer.id}
+          selected={selectedOption === answer.id}
+          disabled={disabled}
         />
       ))}
     </div>

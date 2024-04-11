@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import QuestionBubble from "./question-bubble";
 import Challenge from "./challenge";
+import Footer from "./footer";
+import { set } from "zod";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -17,8 +19,46 @@ interface Props {
 
 const Quiz = ({ questions }: Props) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<string>();
+  const [status, setStatus] = useState<"none" | "correct" | "wrong">("none");
 
   const currentQuestionData = questions[currentQuestionIndex];
+  const answers = currentQuestionData.answers;
+
+  const onNext = () => {
+    setCurrentQuestionIndex((current) => current + 1);
+  };
+
+  const onSelect = (id: string) => {
+    if (status !== "none") return;
+
+    setSelectedOption(id);
+  };
+
+  const onContiune = () => {
+    if (!selectedOption) return;
+
+    if (status === "wrong") {
+      setStatus("none");
+      setSelectedOption(undefined);
+      return;
+    }
+
+    if (status === "correct") {
+      onNext();
+      setStatus("none");
+      setSelectedOption(undefined);
+      return;
+    }
+
+    const correctOption = answers.find((answer) => answer.isCorrect === true);
+
+    if (correctOption && correctOption.id === selectedOption) {
+      setStatus("correct");
+    } else {
+      setStatus("wrong");
+    }
+  };
 
   const BadgeType = () => {
     switch (currentQuestionData.type) {
@@ -48,10 +88,10 @@ const Quiz = ({ questions }: Props) => {
             <div className="">
               <QuestionBubble question={currentQuestionData.question} />
               <Challenge
-                answers={currentQuestionData.answers}
-                onSelect={() => {}}
-                status="none"
-                selectedAnswer={undefined}
+                answers={answers}
+                onSelect={onSelect}
+                status={status}
+                selectedOption={selectedOption}
                 disabled={false}
                 type={currentQuestionData.type}
               />
@@ -59,6 +99,7 @@ const Quiz = ({ questions }: Props) => {
           </div>
         </div>
       </div>
+      <Footer onCheck={onContiune} status={status} disabled={!selectedOption} />
     </>
   );
 };
