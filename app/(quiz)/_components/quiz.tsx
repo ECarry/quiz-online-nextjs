@@ -3,11 +3,11 @@
 import { Answer, Question } from "@prisma/client";
 import Header from "./header";
 import { useState } from "react";
+
 import { Badge } from "@/components/ui/badge";
 import QuestionBubble from "./question-bubble";
 import Challenge from "./challenge";
 import Footer from "./footer";
-import { set } from "zod";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -21,6 +21,11 @@ const Quiz = ({ questions }: Props) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string>();
   const [status, setStatus] = useState<"none" | "correct" | "wrong">("none");
+  const [progress, setProgress] = useState(() => {
+    if (questions.length === 0) return 0;
+
+    return (currentQuestionIndex / questions.length) * 100;
+  });
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData.answers;
@@ -75,7 +80,11 @@ const Quiz = ({ questions }: Props) => {
 
   return (
     <>
-      <Header />
+      <Header
+        progress={progress}
+        current={currentQuestionIndex}
+        total={questions.length}
+      />
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">
           <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col lg:gap-y-12 gap-y-6">
