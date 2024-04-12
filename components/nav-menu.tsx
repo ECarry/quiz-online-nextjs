@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { useModal } from "@/hooks/use-modal-store";
 import { signOut } from "next-auth/react";
 
 import { Icons } from "@/components/icons";
@@ -18,12 +17,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "./ui/badge";
-// import Avatar from "/public/images/avatar.jpg";
 
 export function NavMenu() {
   const user = useCurrentUser();
-
-  const AvatarImage = user?.image ? user.image : "";
 
   return (
     <DropdownMenu>
@@ -31,7 +27,7 @@ export function NavMenu() {
         {user ? (
           <div className="flex h-8 md:h-11 items-center gap-x-0 md:gap-x-2 rounded-full w-8 md:w-20 cursor-pointer justify-between pl-0 md:pl-[6px] pr-0 md:pr-[14px] border-0 md:border hover:bg-primary-foreground">
             <Image
-              src={AvatarImage || "/avatar.svg"}
+              src={user.image || "/avatar.svg"}
               alt="avatar"
               width={32}
               height={32}
@@ -50,6 +46,12 @@ export function NavMenu() {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
+        <DropdownMenuLabel className="font-normal select-none">
+          <Button asChild variant={"secondary"} className="text-sm w-full">
+            <Link href="/auth/login">Login</Link>
+          </Button>
+          <DropdownMenuSeparator />
+        </DropdownMenuLabel>
         {user && (
           <>
             <DropdownMenuLabel className="font-normal select-none">
@@ -96,9 +98,15 @@ export function NavMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
+          <Link className="flex justify-between items-center" href="/">
+            <span>Home Page</span>
+            <Icons.arrowUpRight className="size-5" />
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link
             className="flex justify-between items-center"
-            href={"https://github.com/ECarry/server-hub-nextjs"}
+            href="https://github.com/ECarry/server-hub-nextjs"
             target="_blank"
           >
             <span>Github</span>

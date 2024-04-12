@@ -1,14 +1,9 @@
-import { NavMenu } from "@/components/nav-menu";
-import { Meteors } from "@/components/ui/meteors";
+import { Spotlight } from "@/components/ui/spotlight";
 import Hero from "./_components/hero";
 
 export default function Home() {
   return (
-    <div className="w-full">
-      <header className="h-20 w-full flex items-center justify-end p-4 max-w-7xl">
-        <NavMenu />
-      </header>
-      <Meteors number={50} />
+    <div className="h-full w-full pt-40 max-w-[84rem] mx-auto relative z-20 px-2">
       <Hero />
     </div>
   );
