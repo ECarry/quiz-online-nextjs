@@ -17,11 +17,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "./ui/badge";
 // import Avatar from "/public/images/avatar.jpg";
 
 export function NavMenu() {
   const user = useCurrentUser();
-  const { onOpen } = useModal();
 
   const AvatarImage = user?.image ? user.image : "";
 
@@ -58,30 +58,19 @@ export function NavMenu() {
                 <p className="text-sm leading-none text-muted-foreground">
                   {user.email}
                 </p>
-                <Button
+                {/* <Button
                   variant={"secondary"}
                   className="mt-2 text-sm"
                   onClick={() => {}}
                 >
                   Request content
-                </Button>
+                </Button> */}
               </div>
 
               <DropdownMenuSeparator />
             </DropdownMenuLabel>
           </>
         )}
-
-        <DropdownMenuItem asChild>
-          <Link
-            className="flex justify-start items-center gap-x-2"
-            href="/collections"
-          >
-            <Icons.bookmark className="size-5" />
-            <span>Collections</span>
-          </Link>
-        </DropdownMenuItem>
-
         {user && (
           <DropdownMenuItem asChild>
             <div
@@ -90,6 +79,7 @@ export function NavMenu() {
             >
               <Icons.settings className="size-5" />
               <span>Settings</span>
+              <Badge variant="secondary">TODO</Badge>
             </div>
           </DropdownMenuItem>
         )}

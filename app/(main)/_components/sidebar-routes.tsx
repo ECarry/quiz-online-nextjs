@@ -7,16 +7,19 @@ const routes = [
     href: "/main",
     icon: "🏝️",
     label: "Browse",
+    disabled: false,
   },
   {
     href: "/practice-hub",
     icon: "🥊",
     label: "Practice",
+    disabled: true,
   },
   {
     href: "/rank",
     icon: "🥇",
     label: "Rank",
+    disabled: true,
   },
 ];
 
@@ -29,6 +32,7 @@ const SidebarRoutes = () => {
           label={route.label}
           href={route.href}
           icon={route.icon}
+          disabled={route.disabled}
         />
       ))}
     </div>

@@ -1,14 +1,16 @@
 import { usePathname, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 interface SidebarItemProps {
   href: string;
   label: string;
   icon: string;
+  disabled?: boolean;
 }
 
-const SidebarItem = ({ href, label, icon }: SidebarItemProps) => {
+const SidebarItem = ({ href, label, icon, disabled }: SidebarItemProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -21,15 +23,22 @@ const SidebarItem = ({ href, label, icon }: SidebarItemProps) => {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         "flex items-center gap-x-2 text-slate-500 text-sm pl-6 transition-all hover:text-slate-600 hover:bg-slate-300/20",
         isActive &&
-          "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700"
+          "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700",
+        disabled && "cursor-not-allowed"
       )}
     >
       <div className="flex items-center gap-x-2 py-2">
         <span className="text-2xl">{icon}</span>
         {label}
+        {disabled && (
+          <Badge className="ml-auto text-xs" variant="secondary">
+            TODO
+          </Badge>
+        )}
       </div>
       <div
         className={cn(
