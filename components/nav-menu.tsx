@@ -46,12 +46,6 @@ export function NavMenu() {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-60">
-        <DropdownMenuLabel className="font-normal select-none">
-          <Button asChild variant={"secondary"} className="text-sm w-full">
-            <Link href="/auth/login">Login</Link>
-          </Button>
-          <DropdownMenuSeparator />
-        </DropdownMenuLabel>
         {user && (
           <>
             <DropdownMenuLabel className="font-normal select-none">
@@ -84,6 +78,14 @@ export function NavMenu() {
               <Badge variant="secondary">TODO</Badge>
             </div>
           </DropdownMenuItem>
+        )}
+        {!user && (
+          <DropdownMenuLabel className="font-normal select-none">
+            <Button asChild variant={"secondary"} className="text-sm w-full">
+              <Link href="/auth/login">Login</Link>
+            </Button>
+            <DropdownMenuSeparator />
+          </DropdownMenuLabel>
         )}
         <DropdownMenuSeparator />
 
