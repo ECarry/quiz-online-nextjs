@@ -29,7 +29,7 @@ const Header = ({ progress, current, total }: Props) => {
             animate={{ y: "0%" }}
             exit={{ y: "-100%" }}
             transition={{ ease: "backIn", duration: 0.75 }}
-            className="block font-semibold text-lg text-black"
+            className="block font-semibold text-lg"
           >
             {current + 1}
           </motion.span>
