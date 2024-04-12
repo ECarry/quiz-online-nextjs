@@ -31,7 +31,7 @@ export function NavMenu() {
         {user ? (
           <div className="flex h-8 md:h-11 items-center gap-x-0 md:gap-x-2 rounded-full w-8 md:w-20 cursor-pointer justify-between pl-0 md:pl-[6px] pr-0 md:pr-[14px] border-0 md:border hover:bg-primary-foreground">
             <Image
-              src={AvatarImage}
+              src={AvatarImage || "/avatar.svg"}
               alt="avatar"
               width={32}
               height={32}
