@@ -1,6 +1,5 @@
 import React from "react";
 import MobileSidebar from "./mobile-sidebar";
-import UserButton from "@/components/user-button";
 import { NavMenu } from "@/components/nav-menu";
 
 const Navbar = () => {
