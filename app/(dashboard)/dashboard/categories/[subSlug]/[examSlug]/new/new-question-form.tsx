@@ -9,7 +9,6 @@ import { newQuestion } from "@/actions/question";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,13 +18,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
@@ -165,11 +157,8 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                 <span className="sr-only">Back</span>
               </Button>
               <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                Pro Controller
+                Back
               </h1>
-              <Badge variant="outline" className="ml-auto sm:ml-0">
-                In stock
-              </Badge>
               <div className="hidden items-center gap-2 md:ml-auto md:flex">
                 <Button
                   variant="outline"

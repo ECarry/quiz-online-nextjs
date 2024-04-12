@@ -100,6 +100,12 @@ export function NavMenu() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
+          <Link className="flex justify-between items-center" href={"/main"}>
+            <span>Chanllenges</span>
+            <Icons.arrowUpRight className="size-5" />
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <Link
             className="flex justify-between items-center"
             href={"https://github.com/ECarry/server-hub-nextjs"}
