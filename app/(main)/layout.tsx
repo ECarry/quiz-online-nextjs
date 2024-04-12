@@ -25,7 +25,7 @@ const MainLayout = ({
         <Sidebar />
       </div>
 
-      <main className="md:ml-56">{children}</main>
+      <main className="md:ml-56 pt-20 h-full">{children}</main>
     </div>
   );
 };

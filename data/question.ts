@@ -120,3 +120,33 @@ export const getExamBySlugWithQuestion = async (slug: string) => {
     console.log(error);
   }
 };
+
+export const getTestsWithQuestions = async (id?: string) => {
+  try {
+    const quizs = await db.exam.findMany({
+      where: {
+        subjectId: id,
+      },
+      include: {
+        questions: true,
+      },
+    });
+
+    return quizs;
+  } catch (error) {}
+};
+
+export const getQuestionsByExamId = async (id: string) => {
+  try {
+    const questions = await db.question.findMany({
+      where: {
+        examId: id,
+      },
+      include: {
+        answers: true,
+      },
+    });
+
+    return questions;
+  } catch (error) {}
+};

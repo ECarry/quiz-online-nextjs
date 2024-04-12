@@ -1,5 +1,6 @@
 import { NavMenu } from "@/components/nav-menu";
 import { Meteors } from "@/components/ui/meteors";
+import Hero from "./_components/hero";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
         <NavMenu />
       </header>
       <Meteors number={50} />
+      <Hero />
     </div>
   );
 }

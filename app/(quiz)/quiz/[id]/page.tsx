@@ -1,17 +1,18 @@
-import { getQuestionsByExamSlug } from "@/data/question";
+import { getQuestionsByExamId } from "@/data/question";
 import { redirect } from "next/navigation";
-import Quiz from "../_components/quiz";
-import { Answer, Question } from "@prisma/client";
+import Quiz from "../../_components/quiz";
 
-interface QuestionWithAnswer extends Question {
-  answers: Answer[];
+interface Props {
+  params: {
+    id: string;
+  };
 }
 
-const QuizPage = async () => {
-  const questions = await getQuestionsByExamSlug("hcip-storage-202403");
+const QuizPage = async ({ params }: Props) => {
+  const questions = await getQuestionsByExamId(params.id);
 
-  if (!questions) {
-    redirect("/mian");
+  if (!questions || questions.length === 0) {
+    return <div>404</div>;
   }
 
   // random question
