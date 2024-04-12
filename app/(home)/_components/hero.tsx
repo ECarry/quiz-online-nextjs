@@ -1,3 +1,5 @@
+import ShimmerButton from "@/components/shimmer-button";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -13,6 +15,11 @@ const Hero = () => {
         Explore our vast collection of quizzes and simulated exams, designed to
         help you conquer challenges and excel in your academic journey.
       </p>
+      <div className="md:pt-4">
+        <Link href={"/main"}>
+          <ShimmerButton label="Ready to Challenges!" />
+        </Link>
+      </div>
     </div>
   );
 };

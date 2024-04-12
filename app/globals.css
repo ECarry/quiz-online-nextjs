@@ -80,3 +80,20 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+/* TODO: tailwind.config.ts */
+@property --shimmer-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shimmer {
+  0% {
+    --shimmer-angle: 0deg;
+  }
+
+  100% {
+    --shimmer-angle: 360deg;
+  }
+}
