@@ -1,5 +1,4 @@
 import { getQuestionsByExamId } from "@/data/question";
-import { redirect } from "next/navigation";
 import Quiz from "../../_components/quiz";
 
 interface Props {

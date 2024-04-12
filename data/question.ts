@@ -126,6 +126,7 @@ export const getTestsWithQuestions = async (id?: string) => {
     const quizs = await db.exam.findMany({
       where: {
         subjectId: id,
+        status: "PUBLIC",
       },
       include: {
         questions: true,
