@@ -101,7 +101,7 @@ export function NavMenu() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link className="flex justify-between items-center" href="/">
-            <span>Home Page</span>
+            <span>Homepage</span>
             <Icons.arrowUpRight className="size-5" />
           </Link>
         </DropdownMenuItem>
