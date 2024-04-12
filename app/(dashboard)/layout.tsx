@@ -1,5 +1,15 @@
+import { Metadata } from "next";
 import AsideBar from "./_components/aside-bar";
 import HeaderBar from "./_components/header-bar";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s - Dashboard - Quiz Master Zone",
+    default: "Quiz Master Zone",
+  },
+  description:
+    "Welcome to QuizMasterZone - your ultimate destination for online quizzes and simulated exams! Whether you're looking to practice for an upcoming test or simulate the exam environment, we've got you covered. Explore a wide range of quizzes across various subjects and levels, and sharpen your skills for success. Start your journey towards mastery today with QuizMasterZone!",
+};
 
 const DashboardLayout = ({
   children,

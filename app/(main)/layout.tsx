@@ -1,5 +1,15 @@
+import { Metadata } from "next";
 import Navbar from "./_components/navbar";
 import Sidebar from "./_components/sidebar";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s - Home - Quiz Master Zone",
+    default: "Home - Quiz Master Zone",
+  },
+  description:
+    "Welcome to QuizMasterZone - your ultimate destination for online quizzes and simulated exams! Whether you're looking to practice for an upcoming test or simulate the exam environment, we've got you covered. Explore a wide range of quizzes across various subjects and levels, and sharpen your skills for success. Start your journey towards mastery today with QuizMasterZone!",
+};
 
 const MainLayout = ({
   children,
