@@ -56,23 +56,63 @@ const Hero = () => {
           </Link>
         </motion.div>
       </div>
-      <motion.div
-        initial={{ opacity: 0.0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.8,
-          duration: 0.8,
-          ease: "easeInOut",
-        }}
-        className="w-full items-center justify-center hidden xl:flex"
-      >
-        <Image
-          src="/illustration.png"
-          alt="illustration"
-          width={300}
-          height={300}
-        />
-      </motion.div>
+      <div className="relative w-full h-full hidden xl:block">
+        <motion.div
+          initial={{ opacity: 0.0, y: -200, x: -200 }}
+          //animate={{ opacity: 1, y: 0, x: 0 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{
+            delay: 1,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-[200px] -left-10"
+        >
+          <Image
+            src="/illustration.png"
+            alt="illustration"
+            width={350}
+            height={350}
+            className="rotate-[65deg]"
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0.0, y: -100, x: 200 }}
+          animate={{ opacity: 1, y: 0, x: 0 }}
+          transition={{
+            delay: 1.5,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="absolute -right-[80px] -top-[150px]"
+        >
+          <Image
+            src="/illustration3.png"
+            alt="illustration"
+            width={200}
+            height={200}
+            className="-rotate-[120deg]"
+          />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0.0, y: 200 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 2,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="absolute -bottom-[500px] -right-[100px]"
+        >
+          <Image
+            src="/illustration2.png"
+            alt="illustration"
+            width={350}
+            height={350}
+            className="-rotate-45"
+          />
+        </motion.div>
+      </div>
     </div>
   );
 };

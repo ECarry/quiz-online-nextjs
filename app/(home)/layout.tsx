@@ -8,7 +8,7 @@ const HomeLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full overflow-x-hidden">
       <header className="z-[50] fixed top-0 w-full bg-transparent border-b border-transparent">
         <div className="container flex h-16 items-center max-w-[88rem] mx-auto">
           <Link href="/">
