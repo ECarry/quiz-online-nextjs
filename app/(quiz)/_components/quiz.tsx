@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import QuestionBubble from "./question-bubble";
 import Challenge from "./challenge";
 import Footer from "./footer";
+import { addWrongQuestion } from "@/actions/question";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -62,6 +63,9 @@ const Quiz = ({ questions }: Props) => {
       setStatus("correct");
     } else {
       setStatus("wrong");
+      addWrongQuestion(currentQuestionData.id).then((data) => {
+        console.log(data?.success);
+      });
     }
   };
 

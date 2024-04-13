@@ -1,5 +1,6 @@
 "use server";
 
+import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import {
   CreateCategorySchema,
@@ -7,6 +8,7 @@ import {
   NewQuestionSchema,
 } from "@/schemas";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export const createCategory = async (
@@ -150,5 +152,57 @@ export const newQuestion = async (
     console.log(error);
 
     return { error: "Something wrong" };
+  }
+};
+
+export const addWrongQuestion = async (questionId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return redirect("/auth/login");
+  }
+
+  if (!user.email) {
+    throw new Error("User not found");
+  }
+
+  const existingUser = await db.user.findUnique({
+    where: { email: user.email },
+  });
+
+  if (!existingUser) {
+    throw new Error("User not found");
+  }
+
+  const question = await db.question.findUnique({
+    where: { id: questionId },
+  });
+
+  if (!question) {
+    throw new Error("Question not found");
+  }
+
+  const existingWrongQuestion = await db.wrongQuestion.findFirst({
+    where: {
+      questionId: question.id,
+      userId: existingUser.id,
+    },
+  });
+
+  if (existingWrongQuestion) {
+    return;
+  }
+
+  try {
+    const wrongQuestion = await db.wrongQuestion.create({
+      data: {
+        questionId: question.id,
+        userId: existingUser.id,
+      },
+    });
+
+    return { wrongQuestion, success: "Added to wrong questions" };
+  } catch (error) {
+    throw new Error("Something wrong");
   }
 };
