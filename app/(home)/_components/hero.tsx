@@ -64,7 +64,7 @@ const Hero = () => {
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="flex w-full items-center justify-center"
+        className="w-full items-center justify-center hidden xl:flex"
       >
         <Image
           src="/illustration.png"
