@@ -3,16 +3,18 @@
 import ShimmerButton from "@/components/shimmer-button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const Hero = () => {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 pb-40">
-      <div className="flex flex-col items-start xl:px-0 px-8 gap-8">
+      <div className="flex flex-col items-start px-8 xl:px-2 2xl:px-0 gap-8">
         <motion.div
           initial={{ opacity: 0.0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.4,
+            delay: 0.2,
+            duration: 0.8,
             ease: "easeInOut",
           }}
         >
@@ -25,7 +27,8 @@ const Hero = () => {
           initial={{ opacity: 0.0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.6,
+            delay: 0.4,
+            duration: 0.8,
             ease: "easeInOut",
           }}
           className="flex flex-col gap-4"
@@ -43,6 +46,7 @@ const Hero = () => {
           initial={{ opacity: 0.0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
+            delay: 0.6,
             duration: 0.8,
             ease: "easeInOut",
           }}
@@ -52,7 +56,23 @@ const Hero = () => {
           </Link>
         </motion.div>
       </div>
-      <div></div>
+      <motion.div
+        initial={{ opacity: 0.0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.8,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="flex w-full items-center justify-center"
+      >
+        <Image
+          src="/illustration.png"
+          alt="illustration"
+          width={300}
+          height={300}
+        />
+      </motion.div>
     </div>
   );
 };
