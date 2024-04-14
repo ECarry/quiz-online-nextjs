@@ -31,8 +31,8 @@ const SidebarItem = ({ href, label, icon, disabled }: SidebarItemProps) => {
         disabled && "cursor-not-allowed"
       )}
     >
-      <div className="flex items-center gap-x-2 py-2">
-        <span className="text-2xl">{icon}</span>
+      <div className="flex items-center gap-x-2 py-3">
+        <span className="text-3xl">{icon}</span>
         {label}
         {disabled && (
           <Badge className="ml-auto text-xs" variant="secondary">

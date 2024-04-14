@@ -21,6 +21,24 @@ const routes = [
     label: "Rank",
     disabled: true,
   },
+  {
+    href: "/ai",
+    icon: "🤖",
+    label: "Ask AI",
+    disabled: true,
+  },
+  {
+    href: "/profile",
+    icon: "🧑🏻",
+    label: "Propfile",
+    disabled: true,
+  },
+  {
+    href: "/settings",
+    icon: "⚙️",
+    label: "Settings",
+    disabled: true,
+  },
 ];
 
 const SidebarRoutes = () => {
