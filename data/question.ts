@@ -1,4 +1,6 @@
+import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { getUserByEmail, getUserById } from "./user";
 
 export const getCategory = async () => {
   try {
@@ -150,4 +152,35 @@ export const getQuestionsByExamId = async (id: string) => {
 
     return questions;
   } catch (error) {}
+};
+
+export const getMistakeQuestions = async () => {
+  const user = await currentUser();
+
+  if (!user) return [];
+
+  if (!user.email) throw new Error("Unauthenticated");
+
+  const existingUser = await db.user.findUnique({
+    where: {
+      email: user.email,
+    },
+  });
+
+  if (!existingUser) throw new Error("User not found");
+
+  try {
+    const mistakes = await db.wrongQuestion.findMany({
+      where: {
+        userId: existingUser.id,
+      },
+      include: {
+        question: true,
+      },
+    });
+
+    return mistakes;
+  } catch (error) {
+    console.log(error);
+  }
 };

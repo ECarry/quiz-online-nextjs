@@ -10,10 +10,10 @@ const routes = [
     disabled: false,
   },
   {
-    href: "/practice-hub",
+    href: "/practice",
     icon: "🥊",
     label: "Practice",
-    disabled: true,
+    disabled: false,
   },
   {
     href: "/rank",
