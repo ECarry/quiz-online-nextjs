@@ -20,7 +20,7 @@ const ExitModal = () => {
   const isModalOpen = isOpen && type === "exit";
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-2">
