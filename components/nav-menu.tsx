@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { signOut } from "next-auth/react";
+import { useCurrentRole } from "@/hooks/user-current-role";
 
 import { Icons } from "@/components/icons";
 import ThemeToggle from "@/components/theme-toggle";
@@ -20,12 +21,13 @@ import { Badge } from "./ui/badge";
 
 export function NavMenu() {
   const user = useCurrentUser();
+  const role = useCurrentRole();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="z-10">
         {user ? (
-          <div className="flex h-8 md:h-11 items-center gap-x-0 md:gap-x-2 rounded-full w-8 md:w-20 cursor-pointer justify-between pl-0 md:pl-[6px] pr-0 md:pr-[14px] border-0 md:border hover:bg-primary-foreground">
+          <div className="flex h-8 md:h-11 items-center gap-x-0 md:gap-x-2 rounded-full w-8 md:w-20 cursor-pointer justify-between pl-0 md:pl-[6px] pr-0 md:pr-[14px] border-0 md:border hover:bg-primary-foreground relative">
             <Image
               src={user.image || "/avatar.svg"}
               alt="avatar"
@@ -34,6 +36,16 @@ export function NavMenu() {
               className="size-8 rounded-full"
             />
             <Icons.menu className="size-4 hidden md:block dark:text-white" />
+            {role === "ADMIN" && (
+              <span className="absolute top-0 left-0 size-2 rounded-full text-lg">
+                ⭐️
+              </span>
+            )}
+            {role === "PLUS" && (
+              <span className="absolute top-0 left-0 size-2 rounded-full text-lg">
+                🚀
+              </span>
+            )}
           </div>
         ) : (
           <Button
@@ -50,7 +62,12 @@ export function NavMenu() {
           <>
             <DropdownMenuLabel className="font-normal select-none">
               <div className="flex flex-col gap-2">
-                <h1 className="font-medium leading-none">{user.name}</h1>
+                <h1 className="font-medium leading-none">
+                  {user.name}
+                  <span className="ml-2 text-muted-foreground text-xs">
+                    {role}
+                  </span>
+                </h1>
                 <p className="text-sm leading-none text-muted-foreground">
                   {user.email}
                 </p>
@@ -93,8 +110,19 @@ export function NavMenu() {
           <ThemeToggle />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
+        {role === "ADMIN" && (
+          <DropdownMenuItem asChild>
+            <Link
+              className="flex justify-between items-center"
+              href="/dashboard"
+            >
+              <span>Dashboard</span>
+              <Icons.arrowUpRight className="size-5" />
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem asChild>
-          <Link className="flex justify-between items-center" href={"/main"}>
+          <Link className="flex justify-between items-center" href="/main">
             <span>Chanllenges</span>
             <Icons.arrowUpRight className="size-5" />
           </Link>
