@@ -64,9 +64,21 @@ export function NavMenu() {
               <div className="flex flex-col gap-2">
                 <h1 className="font-medium leading-none">
                   {user.name}
-                  <span className="ml-2 text-muted-foreground text-xs">
-                    {role}
-                  </span>
+                  {role === "ADMIN" && (
+                    <Badge variant="default" className="ml-2 text-xs">
+                      ADMIN
+                    </Badge>
+                  )}
+                  {role === "PLUS" && (
+                    <Badge variant="gold" className="ml-2 text-xs">
+                      PLUS
+                    </Badge>
+                  )}
+                  {role === "USER" && (
+                    <Badge variant="secondary" className="ml-2 text-xs">
+                      USER
+                    </Badge>
+                  )}
                 </h1>
                 <p className="text-sm leading-none text-muted-foreground">
                   {user.email}

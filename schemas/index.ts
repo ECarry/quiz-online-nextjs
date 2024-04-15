@@ -26,7 +26,6 @@ export const CreateCategorySchema = z.object({
 export const CreateExamSchema = z.object({
   name: z.string(),
   description: z.string().optional(),
-  image: z.string().optional(),
   subjectId: z.string(),
 });
 

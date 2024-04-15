@@ -120,7 +120,7 @@ const CreateExamModal = () => {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="image"
               render={({ field }) => (
@@ -134,7 +134,7 @@ const CreateExamModal = () => {
                   </FormControl>
                 </FormItem>
               )}
-            />
+            /> */}
             <FormError message={error} />
             <Button type="submit" disabled={isPending} className="w-full">
               {isPending ? (
