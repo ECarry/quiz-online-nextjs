@@ -37,12 +37,12 @@ export function NavMenu() {
             />
             <Icons.menu className="size-4 hidden md:block dark:text-white" />
             {role === "ADMIN" && (
-              <span className="absolute top-0 left-0 size-2 rounded-full text-lg">
+              <span className="absolute -top-2 -left-2 md:top-0 md:left-0 rounded-full text-lg">
                 ⭐️
               </span>
             )}
             {role === "PLUS" && (
-              <span className="absolute top-0 left-0 size-2 rounded-full text-lg">
+              <span className="absolute -top-2 -left-2 md:top-0 md:left-0 rounded-full text-lg">
                 🚀
               </span>
             )}
