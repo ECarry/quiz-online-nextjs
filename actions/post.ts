@@ -13,6 +13,16 @@ export const newPost = async (values: z.infer<typeof NewPostSchema>) => {
     return { error: validatedFields.error };
   }
 
+  const existingSlug = await db.post.findUnique({
+    where: {
+      slug: validatedFields.data.slug,
+    },
+  });
+
+  if (existingSlug) {
+    return { error: "Slug already exists" };
+  }
+
   if (!user?.email) {
     return { error: "You must be logged in to create a post" };
   }
@@ -35,8 +45,10 @@ export const newPost = async (values: z.infer<typeof NewPostSchema>) => {
       },
     });
 
-    return { post, success: "Create successful!" };
+    return { success: "Create successful!" };
   } catch (error) {
+    console.log(error);
+
     return { error: "Something wrong" };
   }
 };

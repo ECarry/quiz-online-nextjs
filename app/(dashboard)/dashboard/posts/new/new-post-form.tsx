@@ -75,10 +75,6 @@ display: none;
   };
 
   const onSubmit = (values: z.infer<typeof NewPostSchema>) => {
-    toast({
-      title: "Success",
-      description: <pre>{JSON.stringify(values, null, 2)}</pre>,
-    });
     startTransition(() => {
       newPost(values).then((data) => {
         if (data.error) {
@@ -87,14 +83,12 @@ display: none;
             title: "Error",
             description: "error",
           });
-
-          if (data.success) {
-            toast({
-              variant: "success",
-              title: "Success",
-              description: `${values.title} has been created successfully!`,
-            });
-          }
+        } else if (data.success) {
+          toast({
+            variant: "success",
+            title: "Success",
+            description: `${values.title} has been created successfully!`,
+          });
         }
       });
     });
