@@ -44,3 +44,23 @@ export const NewQuestionSchema = z.object({
   examId: z.string(),
   answers: z.array(AnswerSchema),
 });
+
+export const NewPostSchema = z.object({
+  // title       String
+  // slug        String   @unique
+  // content     String?
+  // postImage   String?
+  // description String?
+  // tags        String[]
+
+  title: z.string().min(1, {
+    message: "Title must be required",
+  }),
+  slug: z.string().min(1, {
+    message: "Slug must be required",
+  }),
+  content: z.string().optional(),
+  postImage: z.string().optional(),
+  description: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+})

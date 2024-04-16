@@ -16,6 +16,12 @@ const routes = [
     disabled: false,
   },
   {
+    href: "/posts",
+    icon: "🗞️",
+    label: "Posts",
+    disabled: false,
+  },
+  {
     href: "/rank",
     icon: "🥇",
     label: "Rank",

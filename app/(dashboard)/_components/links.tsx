@@ -1,4 +1,4 @@
-import { Home, LibraryBig, Users2 } from "lucide-react";
+import { Book, Home, LibraryBig, Users2 } from "lucide-react";
 
 export const links = [
   {
@@ -10,6 +10,11 @@ export const links = [
     href: "/dashboard/categories",
     label: "Categories",
     icon: <LibraryBig className="h-5 w-5" />,
+  },
+  {
+    href: "/dashboard/posts",
+    label: "Posts",
+    icon: <Book className="h-5 w-5" />,
   },
   {
     href: "/dashboard/users",
