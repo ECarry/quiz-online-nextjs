@@ -1,3 +1,5 @@
+"use server";
+
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NewPostSchema } from "@/schemas";
@@ -11,14 +13,24 @@ export const newPost = async (values: z.infer<typeof NewPostSchema>) => {
     return { error: validatedFields.error };
   }
 
-  if (!user) {
+  if (!user?.email) {
     return { error: "You must be logged in to create a post" };
+  }
+
+  const existingUser = await db.user.findUnique({
+    where: {
+      email: user.email,
+    },
+  });
+
+  if (!existingUser) {
+    return { error: "User not found" };
   }
 
   try {
     const post = await db.post.create({
       data: {
-        userId: user.id,
+        userId: existingUser.id,
         ...validatedFields.data,
       },
     });
