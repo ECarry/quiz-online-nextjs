@@ -22,11 +22,6 @@ const Quiz = ({ questions }: Props) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string>();
   const [status, setStatus] = useState<"none" | "correct" | "wrong">("none");
-  const [progress, setProgress] = useState(() => {
-    if (questions.length === 0) return 0;
-
-    return (currentQuestionIndex / questions.length) * 100;
-  });
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData.answers;
@@ -85,7 +80,6 @@ const Quiz = ({ questions }: Props) => {
   return (
     <>
       <Header
-        progress={progress}
         current={currentQuestionIndex}
         total={questions.length}
       />

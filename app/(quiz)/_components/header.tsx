@@ -5,13 +5,14 @@ import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
-  progress: number;
   current: number;
   total: number;
 }
 
-const Header = ({ progress, current, total }: Props) => {
+const Header = ({ current, total }: Props) => {
   const { onOpen } = useModal();
+
+  const progress = (current / total) * 100;
 
   return (
     <header className="lg:pt-[50px] pt-[20px] px-10 flex gap-x-7 items-center justify-between mx-auto w-full">
