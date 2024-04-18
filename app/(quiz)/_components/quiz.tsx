@@ -9,6 +9,7 @@ import QuestionBubble from "./question-bubble";
 import Challenge from "./challenge";
 import Footer from "./footer";
 import { addWrongQuestion } from "@/actions/question";
+import Tip from "./tip";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -79,11 +80,8 @@ const Quiz = ({ questions }: Props) => {
 
   return (
     <>
-      <Header
-        current={currentQuestionIndex}
-        total={questions.length}
-      />
-      <div className="flex-1">
+      <Header current={currentQuestionIndex} total={questions.length} />
+      <div className="flex-1 relative">
         <div className="h-full flex items-center justify-center">
           <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col lg:gap-y-12 gap-y-6">
             <div className="flex items-center justify-center">
@@ -104,6 +102,11 @@ const Quiz = ({ questions }: Props) => {
               />
             </div>
           </div>
+        </div>
+        <div className="absolute top-8 right-8">
+          {currentQuestionData.explanation && (
+            <Tip content={currentQuestionData.explanation} />
+          )}
         </div>
       </div>
       <Footer onCheck={onContiune} status={status} disabled={!selectedOption} />
