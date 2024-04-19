@@ -88,6 +88,38 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
   };
 
   const onSubmit = (values: z.infer<typeof NewQuestionSchema>) => {
+    const trueAnswerCount = values.answers.filter(
+      (answer) => answer.isCorrect === true
+    ).length;
+
+    if (trueAnswerCount === 0) {
+      return toast({
+        variant: "destructive",
+        title: "Please select at least one correct answer",
+      });
+    }
+
+    if (trueAnswerCount > 1 && values.type === "TRUE_FALSE") {
+      return toast({
+        variant: "destructive",
+        title: "True/False question can only have one correct answer",
+      });
+    }
+
+    if (trueAnswerCount > 1 && values.type === "MCQ") {
+      return toast({
+        variant: "destructive",
+        title: "MCQ question can only have one correct answer",
+      });
+    }
+
+    if (trueAnswerCount === 1 && values.type === "MRQ") {
+      return toast({
+        variant: "destructive",
+        title: "MRQ question must have more than one correct answer",
+      });
+    }
+
     if (
       (values.type === "MCQ" || values.type === "MRQ") &&
       values.answers.length === 2
@@ -120,19 +152,39 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
             variant: "success",
             title: data.success,
           });
-          form.reset({
-            answers: [
-              initialAnswerValues,
-              initialAnswerValues,
-              initialAnswerValues,
-              initialAnswerValues,
-            ],
-            question: "",
-            explanation: "",
-            image: "",
-            type: "MCQ",
-          });
-          router.refresh();
+          if (values.type === "TRUE_FALSE") {
+            form.reset({
+              answers: [
+                { answer: "True", isCorrect: false },
+                { answer: "False", isCorrect: false },
+              ],
+              question: "",
+              explanation: "",
+              image: "",
+              type: values.type,
+            });
+          } else if (values.type === "SHORT_ANSWER") {
+            form.reset({
+              answers: [initialAnswerValues],
+              question: "",
+              explanation: "",
+              image: "",
+              type: values.type,
+            });
+          } else if (values.type === "MCQ" || values.type === "MRQ") {
+            form.reset({
+              answers: [
+                initialAnswerValues,
+                initialAnswerValues,
+                initialAnswerValues,
+                initialAnswerValues,
+              ],
+              question: "",
+              explanation: "",
+              image: "",
+              type: values.type,
+            });
+          }
         }
       });
     });
