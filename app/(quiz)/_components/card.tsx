@@ -7,7 +7,7 @@ interface CardProps {
   selected?: boolean;
   onClick: () => void;
   shortcut: number;
-  status?: "correct" | "wrong" | "none";
+  status?: "correct" | "wrong" | "none" | "complate";
   disabled?: boolean;
   type: QuestionType;
 }

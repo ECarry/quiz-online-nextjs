@@ -5,7 +5,7 @@ import Card from "./card";
 interface ChallengeProps {
   answers: Answer[];
   onSelect: (id: string) => void;
-  status: "correct" | "wrong" | "none";
+  status: "correct" | "wrong" | "none" | "complate";
   selectedOption?: string;
   disabled?: boolean;
   type: QuestionType;

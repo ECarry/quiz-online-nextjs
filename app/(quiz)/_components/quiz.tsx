@@ -1,15 +1,19 @@
 "use client";
 
 import { Answer, Question } from "@prisma/client";
-import Header from "./header";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { addWrongQuestion } from "@/actions/question";
+import { useWindowSize } from "react-use";
 
+import Header from "./header";
 import { Badge } from "@/components/ui/badge";
 import QuestionBubble from "./question-bubble";
 import Challenge from "./challenge";
 import Footer from "./footer";
-import { addWrongQuestion } from "@/actions/question";
+
 import Tip from "./tip";
+import Confetti from "react-confetti";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -20,12 +24,16 @@ interface Props {
 }
 
 const Quiz = ({ questions }: Props) => {
+  const router = useRouter();
+  const { width, height } = useWindowSize();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string>();
-  const [status, setStatus] = useState<"none" | "correct" | "wrong">("none");
+  const [status, setStatus] = useState<
+    "none" | "correct" | "wrong" | "complate"
+  >("none");
 
   const currentQuestionData = questions[currentQuestionIndex];
-  const answers = currentQuestionData.answers;
+  const answers = currentQuestionData?.answers || [];
 
   const onNext = () => {
     setCurrentQuestionIndex((current) => current + 1);
@@ -64,6 +72,31 @@ const Quiz = ({ questions }: Props) => {
       });
     }
   };
+
+  if (!currentQuestionData) {
+    return (
+      <>
+        <Confetti
+          recycle={false}
+          numberOfPieces={500}
+          tweenDuration={10000}
+          width={width}
+          height={height}
+        />
+        <div className="flex flex-col items-center justify-center w-full h-full gap-y-4 max-w-lg mx-auto ">
+          <h1 className="text-[100px]">🎊</h1>
+          <h1 className="text-lg text-center font-bold">
+            Great job! <br /> You&apos;ve completed.
+          </h1>
+        </div>
+        <Footer
+          onCheck={() => router.push("/main")}
+          status={"complate"}
+          disabled={false}
+        />
+      </>
+    );
+  }
 
   const BadgeType = () => {
     switch (currentQuestionData.type) {
