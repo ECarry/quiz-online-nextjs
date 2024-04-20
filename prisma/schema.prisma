@@ -9,22 +9,22 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Account {
-  id                String  @id @default(cuid()) @map("_id")
-  userId            String  @db.ObjectId
+  id                String  @id @default(cuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String? @db.Text
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -33,9 +33,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid()) @map("_id")
+  id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String   @db.ObjectId
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -47,7 +47,7 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -63,27 +63,27 @@ model User {
 }
 
 model Post {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(cuid())
   title       String
   slug        String   @unique
-  content     String?
-  postImage   String?
-  description String?
+  content     String?  @db.Text
+  postImage   String?  @db.Text
+  description String?  @db.Text
   tags        String[]
 
-  userId String @db.ObjectId
+  userId String
   user   User   @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) // 创建时间，默认为当前时间
-  updatedAt DateTime @updatedAt // 更新时间，自动更新
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Subject {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(cuid())
   name        String
   slug        String  @unique
-  description String?
-  image       String?
+  description String? @db.Text
+  image       String? @db.Text
 
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
@@ -98,14 +98,15 @@ enum ExamStatus {
 }
 
 model Exam {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(cuid())
   name        String
   slug        String     @unique
-  description String?
+  description String?    @db.Text
   status      ExamStatus @default(DRAFT)
+  image       String?    @db.Text
 
   Subject   Subject? @relation(fields: [subjectId], references: [id])
-  subjectId String?  @db.ObjectId
+  subjectId String?
 
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
@@ -114,52 +115,211 @@ model Exam {
 }
 
 enum QuestionType {
-  MCQ // 单选题
-  MRQ // 多选题
-  TRUE_FALSE // 判断题
-  SHORT_ANSWER // 简答题
+  MCQ
+  MRQ
+  TRUE_FALSE
+  SHORT_ANSWER
 }
 
-// 题目模型
 model Question {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  question    String
+  id          String       @id @default(cuid())
+  question    String       @db.Text
   type        QuestionType
-  image       String?
-  explanation String?
+  image       String?      @db.Text
+  explanation String?      @db.Text
 
   answers          Answer[]
   WrongQuestion    WrongQuestion[]
   FavoriteQuestion FavoriteQuestion[]
   Exam             Exam               @relation(fields: [examId], references: [id])
-  examId           String             @db.ObjectId
+  examId           String
 }
 
 model Answer {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  answer    String
+  id        String  @id @default(cuid())
+  answer    String  @db.Text
   isCorrect Boolean
 
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String   @db.ObjectId
+  questionId String
 }
 
 model WrongQuestion {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(cuid())
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId
+  userId String
 
   question   Question @relation(fields: [questionId], references: [id])
-  questionId String   @db.ObjectId
+  questionId String
 }
 
 model FavoriteQuestion {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(cuid())
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId
+  userId String
 
   question   Question @relation(fields: [questionId], references: [id])
-  questionId String   @db.ObjectId
+  questionId String
 }
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+// }
+
+// model Account {
+//   id                String  @id @default(cuid()) @map("_id")
+//   userId            String  @db.ObjectId
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String? @db.String
+//   access_token      String? @db.String
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String? @db.String
+//   session_state     String?
+
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@unique([provider, providerAccountId])
+// }
+
+// model Session {
+//   id           String   @id @default(cuid()) @map("_id")
+//   sessionToken String   @unique
+//   userId       String   @db.ObjectId
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
+
+// enum UserRole {
+//   USER
+//   PLUS
+//   ADMIN
+// }
+
+// model User {
+//   id            String    @id @default(auto()) @map("_id") @db.ObjectId
+//   name          String?
+//   email         String?   @unique
+//   emailVerified DateTime?
+//   image         String?
+//   password      String?
+//   role          UserRole  @default(USER)
+//   accounts      Account[]
+//   sessions      Session[]
+
+//   WrongQuestion    WrongQuestion[]
+//   FavoriteQuestion FavoriteQuestion[]
+//   Post             Post[]
+// }
+
+// model Post {
+//   id          String   @id @default(auto()) @map("_id") @db.ObjectId
+//   title       String
+//   slug        String   @unique
+//   content     String?
+//   postImage   String?
+//   description String?
+//   tags        String[]
+
+//   userId String @db.ObjectId
+//   user   User   @relation(fields: [userId], references: [id])
+
+//   createdAt DateTime @default(now()) // 创建时间，默认为当前时间
+//   updatedAt DateTime @updatedAt // 更新时间，自动更新
+// }
+
+// model Subject {
+//   id          String  @id @default(auto()) @map("_id") @db.ObjectId
+//   name        String
+//   slug        String  @unique
+//   description String?
+//   image       String?
+
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   exams Exam[]
+// }
+
+// enum ExamStatus {
+//   PUBLIC
+//   PRIVATE
+//   DRAFT
+// }
+
+// model Exam {
+//   id          String     @id @default(auto()) @map("_id") @db.ObjectId
+//   name        String
+//   slug        String     @unique
+//   description String?
+//   status      ExamStatus @default(DRAFT)
+
+//   Subject   Subject? @relation(fields: [subjectId], references: [id])
+//   subjectId String?  @db.ObjectId
+
+//   createAt DateTime @default(now())
+//   updateAt DateTime @updatedAt
+
+//   questions Question[]
+// }
+
+// enum QuestionType {
+//   MCQ // 单选题
+//   MRQ // 多选题
+//   TRUE_FALSE // 判断题
+//   SHORT_ANSWER // 简答题
+// }
+
+// // 题目模型
+// model Question {
+//   id          String       @id @default(auto()) @map("_id") @db.ObjectId
+//   question    String
+//   type        QuestionType
+//   image       String?
+//   explanation String?
+
+//   answers          Answer[]
+//   WrongQuestion    WrongQuestion[]
+//   FavoriteQuestion FavoriteQuestion[]
+//   Exam             Exam               @relation(fields: [examId], references: [id])
+//   examId           String             @db.ObjectId
+// }
+
+// model Answer {
+//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
+//   answer    String
+//   isCorrect Boolean
+
+//   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+//   questionId String   @db.ObjectId
+// }
+
+// model WrongQuestion {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   user   User   @relation(fields: [userId], references: [id])
+//   userId String @db.ObjectId
+
+//   question   Question @relation(fields: [questionId], references: [id])
+//   questionId String   @db.ObjectId
+// }
+
+// model FavoriteQuestion {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+
+//   user   User   @relation(fields: [userId], references: [id])
+//   userId String @db.ObjectId
+
+//   question   Question @relation(fields: [questionId], references: [id])
+//   questionId String   @db.ObjectId
+// }
