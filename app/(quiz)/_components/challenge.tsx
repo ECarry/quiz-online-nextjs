@@ -7,6 +7,7 @@ interface ChallengeProps {
   onSelect: (id: string) => void;
   status: "correct" | "wrong" | "none" | "complate";
   selectedOption?: string;
+  selectedOptions?: string[];
   disabled?: boolean;
   type: QuestionType;
 }
@@ -18,7 +19,15 @@ const Challenge = ({
   selectedOption,
   disabled,
   type,
+  selectedOptions,
 }: ChallengeProps) => {
+  const handleSelect = (id: string) => {
+    if (type === "MCQ" || "TRUE_FALSE") {
+      onSelect(id);
+    } else {
+    }
+  };
+
   return (
     <div className={cn("grid gap-2  grid-cols-1")}>
       {answers.map((answer, i) => (
@@ -27,10 +36,14 @@ const Challenge = ({
           id={answer.id}
           text={answer.answer}
           shortcut={i + 1}
-          onClick={() => onSelect(answer.id)}
+          onClick={() => handleSelect(answer.id)}
           type={type}
           status={status}
-          selected={selectedOption === answer.id}
+          selected={
+            type === "MCQ" || type === "TRUE_FALSE"
+              ? selectedOption === answer.id
+              : selectedOptions?.includes(answer.id)
+          }
           disabled={disabled}
         />
       ))}

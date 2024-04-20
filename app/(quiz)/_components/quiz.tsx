@@ -28,6 +28,7 @@ const Quiz = ({ questions }: Props) => {
   const { width, height } = useWindowSize();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string>();
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [status, setStatus] = useState<
     "none" | "correct" | "wrong" | "complate"
   >("none");
@@ -42,15 +43,28 @@ const Quiz = ({ questions }: Props) => {
   const onSelect = (id: string) => {
     if (status !== "none") return;
 
-    setSelectedOption(id);
+    if (currentQuestionData.type === "MRQ") {
+      setSelectedOptions((pre) => {
+        // 检查选项是否已经被选中
+        const isSelected = pre.includes(id);
+        // 如果选项已经被选中，则取消选中
+        if (isSelected) {
+          return pre.filter((option) => option !== id);
+        } else {
+          // 如果选项未被选中，则选中该选项
+          return [...pre, id];
+        }
+      });
+    } else {
+      setSelectedOption(id);
+    }
   };
 
   const onContiune = () => {
-    if (!selectedOption) return;
-
     if (status === "wrong") {
       setStatus("none");
       setSelectedOption(undefined);
+      setSelectedOptions([]);
       return;
     }
 
@@ -58,18 +72,40 @@ const Quiz = ({ questions }: Props) => {
       onNext();
       setStatus("none");
       setSelectedOption(undefined);
+      setSelectedOptions([]);
       return;
     }
 
-    const correctOption = answers.find((answer) => answer.isCorrect === true);
+    if (currentQuestionData.type === "MRQ") {
+      const correctOptions = answers.filter(
+        (answer) => answer.isCorrect === true
+      );
 
-    if (correctOption && correctOption.id === selectedOption) {
-      setStatus("correct");
-    } else {
-      setStatus("wrong");
-      addWrongQuestion(currentQuestionData.id).then((data) => {
-        console.log(data?.success);
+      const isCorrect = selectedOptions.every((option) => {
+        return correctOptions.find(
+          (correctOption) => correctOption.id === option
+        );
       });
+
+      if (isCorrect) {
+        setStatus("correct");
+      } else {
+        setStatus("wrong");
+        addWrongQuestion(currentQuestionData.id).then((data) => {
+          console.log(data?.success);
+        });
+      }
+    } else {
+      const correctOption = answers.find((answer) => answer.isCorrect === true);
+
+      if (correctOption && correctOption.id === selectedOption) {
+        setStatus("correct");
+      } else {
+        setStatus("wrong");
+        addWrongQuestion(currentQuestionData.id).then((data) => {
+          console.log(data?.success);
+        });
+      }
     }
   };
 
@@ -120,9 +156,6 @@ const Quiz = ({ questions }: Props) => {
             <div className="flex items-center justify-center">
               <BadgeType />
             </div>
-            {/* <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
-              {currentQuestionIndex + 1}、{currentQuestionData.question}
-            </h1> */}
             <div className="">
               <QuestionBubble question={currentQuestionData.question} />
               <Challenge
@@ -130,6 +163,7 @@ const Quiz = ({ questions }: Props) => {
                 onSelect={onSelect}
                 status={status}
                 selectedOption={selectedOption}
+                selectedOptions={selectedOptions}
                 disabled={false}
                 type={currentQuestionData.type}
               />
@@ -142,7 +176,15 @@ const Quiz = ({ questions }: Props) => {
           )}
         </div>
       </div>
-      <Footer onCheck={onContiune} status={status} disabled={!selectedOption} />
+      <Footer
+        onCheck={onContiune}
+        status={status}
+        disabled={
+          currentQuestionData.type === "MRQ"
+            ? selectedOptions.length < 2
+            : !selectedOption
+        }
+      />
     </>
   );
 };
