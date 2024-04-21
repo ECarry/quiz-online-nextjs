@@ -46,9 +46,11 @@ export function DataTableToolbar<TData>({
       </div>
       <DataTableViewOptions table={table} />
       <Button size="sm" asChild>
-        <Link href={`${pathname}/new`} className="flex items-center gap-1 ml-2">
-          <LucidePlusCircle className="size-4" />
-          New
+        <Link href={`${pathname}/new`} className="h-7 gap-1 ml-2">
+          <LucidePlusCircle className="size-3.5" />
+          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+            New
+          </span>
         </Link>
       </Button>
     </div>

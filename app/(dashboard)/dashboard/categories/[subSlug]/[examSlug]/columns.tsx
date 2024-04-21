@@ -21,7 +21,7 @@ export const columns: ColumnDef<Payment>[] = [
       return (
         <div className="flex space-x-2">
           {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[260px]  sm:max-w-[300px] md:max-w-[400px] lg:max-w-[700px] truncate font-medium">
             {row.getValue("question")}
           </span>
         </div>

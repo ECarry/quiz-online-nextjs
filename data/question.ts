@@ -46,6 +46,9 @@ export const getExamsById = async (id: string) => {
       where: {
         subjectId: id,
       },
+      include: {
+        questions: true,
+      },
     });
 
     return exams;

@@ -10,8 +10,6 @@ interface Props {
 const page = async ({ params }: Props) => {
   const exam = await getExamBySlugWithQuestion(params.examSlug);
 
-  console.log(exam);
-
   if (!exam) {
     return null;
   }

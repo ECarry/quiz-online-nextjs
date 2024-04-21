@@ -16,13 +16,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Exam } from "@prisma/client";
+import { Exam, Question } from "@prisma/client";
 import formatDate from "@/lib/format-date";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
+interface ExamWithQuiz extends Exam {
+  questions: Question[];
+}
+
 interface Props {
-  exams: Exam[] | undefined;
+  exams: ExamWithQuiz[] | undefined;
   slug: string;
 }
 
@@ -70,7 +74,7 @@ const TabContent = ({ exams, slug }: Props) => {
                 {exam.status}
               </Badge>
             </TableCell>
-            <TableCell className="">2</TableCell>
+            <TableCell className="">{exam.questions.length}</TableCell>
             <TableCell className="hidden md:table-cell">
               {formatDate(exam.createAt)}
             </TableCell>

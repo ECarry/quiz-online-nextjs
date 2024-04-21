@@ -20,11 +20,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Exam } from "@prisma/client";
+import { Exam, Question } from "@prisma/client";
 import TabContent from "./tab-content";
 
+interface ExamWithQuiz extends Exam {
+  questions: Question[];
+}
+
 interface Props {
-  exams: Exam[] | undefined;
+  exams: ExamWithQuiz[] | undefined;
   id: string;
   slug: string;
 }
