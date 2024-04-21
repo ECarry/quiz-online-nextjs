@@ -1,15 +1,21 @@
-import { Subject } from "@prisma/client";
+import { Answer, Question, Subject } from "@prisma/client";
 import { create } from "zustand";
+
+interface QuestionWithAnswers extends Question {
+  answers: Answer[];
+}
 
 export type ModalType =
   | "createCategory"
   | "createExam"
   | "editCategory"
-  | "exit";
+  | "exit"
+  | "editQuestion";
 
 interface ModalData {
   id?: string;
   category?: Subject;
+  question?: QuestionWithAnswers;
 }
 
 interface ModalStore {

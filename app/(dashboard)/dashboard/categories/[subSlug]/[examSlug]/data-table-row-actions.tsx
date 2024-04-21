@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { deleteQuestion } from "@/actions/question";
 import { ExamWithQuestionSchema } from "@/schemas";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -26,6 +27,8 @@ export function DataTableRowActions<TData>({
     await deleteQuestion(data.id);
   };
 
+  const { onOpen } = useModal();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,7 +41,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onOpen("editQuestion", {})}>
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuItem onClick={handleDlete}>Delete</DropdownMenuItem>
       </DropdownMenuContent>
