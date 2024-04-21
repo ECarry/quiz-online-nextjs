@@ -150,7 +150,7 @@ model WrongQuestion {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
 }
 
@@ -160,7 +160,7 @@ model FavoriteQuestion {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
 }
 

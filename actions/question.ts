@@ -206,3 +206,30 @@ export const addWrongQuestion = async (questionId: string) => {
     throw new Error("Something wrong");
   }
 };
+
+export const deleteQuestion = async (questionId: string) => {
+  if (!questionId) {
+    return { error: "Question id missing." };
+  }
+
+  const existingQuestion = await db.question.findUnique({
+    where: { id: questionId },
+  });
+
+  if (!existingQuestion) {
+    return { error: "Question not found." };
+  }
+
+  try {
+    await db.question.delete({
+      where: { id: questionId },
+    });
+
+    revalidatePath("/dashboard/categories");
+
+    return { success: "Question deleted." };
+  } catch (error) {
+    console.log(error);
+    return { error: "Something wrong." };
+  }
+};

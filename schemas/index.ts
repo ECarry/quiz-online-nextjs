@@ -63,4 +63,49 @@ export const NewPostSchema = z.object({
   postImage: z.string().optional(),
   description: z.string().optional(),
   tags: z.array(z.string()).optional(),
-})
+});
+
+export const ExamWithQuestionSchema = z.object({
+  // {
+  //   id: '66222c00fa7d388ab521414c',
+  //   name: 'Test',
+  //   slug: 'test',
+  //   description: null,
+  //   status: 'PUBLIC',
+  //   image: null,
+  //   subjectId: '66139f2a5bade4c7aae31f1f',
+  //   createAt: 2024-04-19T08:32:00.164Z,
+  //   updateAt: 2024-04-19T08:34:37.784Z,
+  //   questions: [
+  //     {
+  //       id: 'clv9398hd0001osoqqvbt5aa9',
+  //       question: 'T / F',
+  //       type: 'TRUE_FALSE',
+  //       image: '',
+  //       explanation: '',
+  //       examId: '66222c00fa7d388ab521414c'
+  //     }
+  //   ]
+  // }
+  id: z.string(),
+  name: z.string().optional(),
+  slug: z.string().optional(),
+  description: z.string().optional(),
+  status: z.enum(["PUBLIC", "PRIVATE"]).optional(),
+  image: z.string().optional(),
+  subjectId: z.string().optional(),
+  createAt: z.date().optional(),
+  updateAt: z.date().optional(),
+  questions: z
+    .array(
+      z.object({
+        id: z.string(),
+        question: z.string(),
+        type: z.enum(["MCQ", "MRQ", "TRUE_FALSE", "SHORT_ANSWER"]),
+        image: z.string().optional(),
+        explanation: z.string().optional(),
+        examId: z.string(),
+      })
+    )
+    .optional(),
+});
