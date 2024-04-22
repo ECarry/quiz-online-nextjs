@@ -92,7 +92,14 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
       (answer) => answer.isCorrect === true
     ).length;
 
-    if (trueAnswerCount === 0) {
+    if (values.type === "SHORT_ANSWER" && !values.answers[0].answer) {
+      return toast({
+        variant: "destructive",
+        title: "Short answer question cannot have answers",
+      });
+    }
+
+    if (values.type !== "SHORT_ANSWER" && trueAnswerCount === 0) {
       return toast({
         variant: "destructive",
         title: "Please select at least one correct answer",
@@ -120,18 +127,6 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
       });
     }
 
-    if (
-      (values.type === "MCQ" || values.type === "MRQ") &&
-      values.answers.length === 2
-    ) {
-      toast({
-        variant: "destructive",
-        title:
-          "Multiple Choice/Response question must have more than 2 answers",
-      });
-
-      return;
-    }
     if (form.getValues("type") === "TRUE_FALSE" && values.answers.length > 2) {
       toast({
         variant: "destructive",
@@ -332,61 +327,85 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                     <CardDescription>This is answer form</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-col gap-4">
-                      {fields.map((field, index) => (
-                        <div
-                          className="flex items-center gap-4 grid-cols-4"
-                          key={field.id}
-                        >
-                          <FormField
-                            control={form.control}
-                            name={`answers.${index}.answer`}
-                            render={({ field }) => (
-                              <FormItem className="w-full">
-                                <FormControl>
-                                  <Textarea {...field} disabled={isPending} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name={`answers.${index}.isCorrect`}
-                            render={({ field }) => (
-                              <FormItem className="col-span-1">
-                                <FormControl>
-                                  <Switch
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                    disabled={isPending}
-                                  />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                          {form.getValues("type") !== "TRUE_FALSE" && (
-                            <CircleMinus
-                              size={28}
-                              onClick={() => remove(index)}
-                              className="text-primary cursor-pointer text-rose-500"
-                            />
-                          )}
+                    {form.getValues("type") !== "SHORT_ANSWER" ? (
+                      <>
+                        <div className="flex flex-col gap-4">
+                          {fields.map((field, index) => (
+                            <div
+                              className="flex items-center gap-4 grid-cols-4"
+                              key={field.id}
+                            >
+                              <FormField
+                                control={form.control}
+                                name={`answers.${index}.answer`}
+                                render={({ field }) => (
+                                  <FormItem className="w-full">
+                                    <FormControl>
+                                      <Textarea
+                                        {...field}
+                                        disabled={isPending}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name={`answers.${index}.isCorrect`}
+                                render={({ field }) => (
+                                  <FormItem className="col-span-1">
+                                    <FormControl>
+                                      <Switch
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        disabled={isPending}
+                                      />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+                              {form.getValues("type") !== "TRUE_FALSE" && (
+                                <CircleMinus
+                                  size={28}
+                                  onClick={() => remove(index)}
+                                  className="text-primary cursor-pointer text-rose-500"
+                                />
+                              )}
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
 
-                    {form.getValues("type") !== "TRUE_FALSE" && (
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="mt-2"
-                        onClick={() => append({ answer: "", isCorrect: false })}
-                        disabled={isPending}
-                      >
-                        Add Answer
-                      </Button>
+                        {form.getValues("type") !== "TRUE_FALSE" && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="mt-2"
+                            onClick={() =>
+                              append({ answer: "", isCorrect: false })
+                            }
+                            disabled={isPending}
+                          >
+                            Add Answer
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex flex-col gap-4">
+                        <FormField
+                          control={form.control}
+                          name={`answers.0.answer`}
+                          render={({ field }) => (
+                            <FormItem className="w-full">
+                              <FormControl>
+                                <Textarea {...field} disabled={isPending} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     )}
                   </CardContent>
                 </Card>
