@@ -109,6 +109,18 @@ const Quiz = ({ questions }: Props) => {
     }
   };
 
+  const handleShowAnswer = () => {
+    const correctOption = answers.filter((answer) => answer.isCorrect === true);
+
+    if (currentQuestionData.type === "MRQ") {
+      setSelectedOptions(correctOption.map((option) => option.id));
+    } else {
+      setSelectedOption(correctOption ? correctOption[0].id : undefined);
+    }
+
+    setStatus("none");
+  };
+
   if (!currentQuestionData) {
     return (
       <>
@@ -177,6 +189,7 @@ const Quiz = ({ questions }: Props) => {
         </div>
       </div>
       <Footer
+        onShowAnswer={handleShowAnswer}
         onCheck={onContiune}
         status={status}
         disabled={
