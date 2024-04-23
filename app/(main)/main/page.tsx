@@ -9,6 +9,9 @@ interface Props {
 }
 
 const HomePage = async ({ params }: Props) => {
+  // delay 500ms
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
   const categories = await getCategory();
   const categoryId = params.categoryId;
 
