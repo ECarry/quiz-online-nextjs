@@ -187,3 +187,26 @@ export const getMistakeQuestions = async () => {
     console.log(error);
   }
 };
+
+export const getQuestionWithAnswersById = async (id: string) => {
+  if (!id) {
+    return null;
+  }
+
+  try {
+    const question = await db.question.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        answers: true,
+      },
+    });
+
+    return question;
+  } catch (error) {
+    console.log(error);
+
+    return null;
+  }
+};

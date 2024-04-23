@@ -13,6 +13,7 @@ import {
 import { deleteQuestion } from "@/actions/question";
 import { ExamWithQuestionSchema } from "@/schemas";
 import { useModal } from "@/hooks/use-modal-store";
+import { usePathname, useRouter } from "next/navigation";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -21,13 +22,13 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const router = useRouter();
+  const pathname = usePathname();
   const data = ExamWithQuestionSchema.parse(row.original);
 
   const handleDlete = async () => {
     await deleteQuestion(data.id);
   };
-
-  const { onOpen } = useModal();
 
   return (
     <DropdownMenu>
@@ -41,7 +42,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onClick={() => onOpen("editQuestion", {})}>
+        <DropdownMenuItem
+          onClick={() => router.push(`${pathname}/edit/${data.id}`)}
+        >
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>

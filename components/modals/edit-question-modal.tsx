@@ -107,7 +107,7 @@ export function EditQuestionModal() {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="h-full max-h-[95%] min-w-[97%] bg-primary-foreground">
-        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+        <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
@@ -357,7 +357,7 @@ export function EditQuestionModal() {
               </div>
             </form>
           </Form>
-        </main>
+        </div>
       </DialogContent>
     </Dialog>
   );
