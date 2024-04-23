@@ -29,6 +29,7 @@ const Quiz = ({ questions }: Props) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string>();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
   const [status, setStatus] = useState<
     "none" | "correct" | "wrong" | "complate"
   >("none");
@@ -60,6 +61,10 @@ const Quiz = ({ questions }: Props) => {
     }
   };
 
+  const onInput = (value: string) => {
+    setInputValue(value);
+  };
+
   const onContiune = () => {
     if (status === "wrong") {
       setStatus("none");
@@ -77,6 +82,7 @@ const Quiz = ({ questions }: Props) => {
     }
 
     if (currentQuestionData.type === "MRQ") {
+      if (selectedOptions.length === 0) return;
       const correctOptions = answers.filter(
         (answer) => answer.isCorrect === true
       );
@@ -88,6 +94,18 @@ const Quiz = ({ questions }: Props) => {
       });
 
       if (isCorrect) {
+        setStatus("correct");
+      } else {
+        setStatus("wrong");
+        addWrongQuestion(currentQuestionData.id).then((data) => {
+          console.log(data?.success);
+        });
+      }
+    } else if (currentQuestionData.type === "SHORT_ANSWER") {
+      if (
+        inputValue.toLowerCase() ===
+        currentQuestionData.answers[0].answer.toLowerCase()
+      ) {
         setStatus("correct");
       } else {
         setStatus("wrong");
@@ -146,6 +164,16 @@ const Quiz = ({ questions }: Props) => {
     );
   }
 
+  const disabledCheckBtn = () => {
+    if (currentQuestionData.type === "MRQ") {
+      return selectedOptions.length < 2;
+    } else if (currentQuestionData.type === "SHORT_ANSWER") {
+      return inputValue === "";
+    } else {
+      return !selectedOption;
+    }
+  };
+
   const BadgeType = () => {
     switch (currentQuestionData.type) {
       case "MCQ":
@@ -173,6 +201,7 @@ const Quiz = ({ questions }: Props) => {
               <Challenge
                 answers={answers}
                 onSelect={onSelect}
+                onInput={onInput}
                 status={status}
                 selectedOption={selectedOption}
                 selectedOptions={selectedOptions}
@@ -192,11 +221,7 @@ const Quiz = ({ questions }: Props) => {
         onShowAnswer={handleShowAnswer}
         onCheck={onContiune}
         status={status}
-        disabled={
-          currentQuestionData.type === "MRQ"
-            ? selectedOptions.length < 2
-            : !selectedOption
-        }
+        disabled={disabledCheckBtn()}
       />
     </>
   );

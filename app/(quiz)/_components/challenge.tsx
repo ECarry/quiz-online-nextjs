@@ -5,6 +5,7 @@ import Card from "./card";
 interface ChallengeProps {
   answers: Answer[];
   onSelect: (id: string) => void;
+  onInput: (value: string) => void;
   status: "correct" | "wrong" | "none" | "complate";
   selectedOption?: string;
   selectedOptions?: string[];
@@ -15,6 +16,7 @@ interface ChallengeProps {
 const Challenge = ({
   answers,
   onSelect,
+  onInput,
   status,
   selectedOption,
   disabled,
@@ -45,6 +47,7 @@ const Challenge = ({
               : selectedOptions?.includes(answer.id)
           }
           disabled={disabled}
+          onInput={onInput}
         />
       ))}
     </div>
