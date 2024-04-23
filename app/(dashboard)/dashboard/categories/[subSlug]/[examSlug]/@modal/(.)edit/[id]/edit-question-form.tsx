@@ -32,6 +32,7 @@ import { NewQuestionSchema } from "@/schemas";
 import ImageUpload from "@/components/image-upload";
 import { Answer, Question } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const initialAnswerValues = { answer: "", isCorrect: false };
 
@@ -143,240 +144,251 @@ const EditQuestionForm = ({ question, answers }: EditQuestionFormProps) => {
               </Button>
             </div>
           </div>
-          <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
-            <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-              {/* QUESTION  */}
-              <Card x-chunk="dashboard-07-chunk-0">
-                <CardHeader>
-                  <CardTitle>Question</CardTitle>
-                  <CardDescription>
-                    Lipsum dolor sit amet, consectetur adipiscing elit
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-6 sm:grid-cols-4">
-                    <div className="grid gap-3 col-span-2">
-                      <FormField
-                        control={form.control}
-                        name="examId"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>test</FormLabel>
-                            <Input {...field} disabled />
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    <div className="grid gap-3 col-span-2">
-                      <FormField
-                        control={form.control}
-                        name="type"
-                        render={({ field }) => (
-                          <FormItem className="space-y-3">
-                            <FormLabel>Type(MCQ MRQ T/F SAQ)</FormLabel>
-                            <FormControl>
-                              <RadioGroup
-                                onValueChange={(values) => {
-                                  field.onChange(values);
-                                  handleTypeChange(values);
-                                }}
-                                defaultValue={question.type}
-                                className="flex items-center justify-between"
-                              >
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroupItem value="MCQ" />
-                                  </FormControl>
-                                </FormItem>
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroupItem value="MRQ" />
-                                  </FormControl>
-                                </FormItem>
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroupItem value="TRUE_FALSE" />
-                                  </FormControl>
-                                </FormItem>
-                                <FormItem>
-                                  <FormControl>
-                                    <RadioGroupItem value="SHORT_ANSWER" />
-                                  </FormControl>
-                                </FormItem>
-                              </RadioGroup>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <div className="grid gap-3 col-span-4">
-                      <FormField
-                        control={form.control}
-                        name="question"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Question</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                {...field}
-                                disabled={isPending}
-                                className="min-h-[120px]"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              {/* ANSWER  */}
-              <Card x-chunk="dashboard-07-chunk-1">
-                <CardHeader>
-                  <CardTitle>Answers</CardTitle>
-                  <CardDescription>This is answer form</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {form.getValues("type") !== "SHORT_ANSWER" ? (
-                    <>
-                      <div className="flex flex-col gap-4">
-                        {fields.map((field, index) => (
-                          <div
-                            className="flex items-center gap-4 grid-cols-4"
-                            key={field.id}
-                          >
-                            <FormField
-                              control={form.control}
-                              name={`answers.${index}.answer`}
-                              render={({ field }) => (
-                                <FormItem className="w-full">
-                                  <FormControl>
-                                    <Textarea {...field} disabled={isPending} />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                            <FormField
-                              control={form.control}
-                              name={`answers.${index}.isCorrect`}
-                              render={({ field }) => (
-                                <FormItem className="col-span-1">
-                                  <FormControl>
-                                    <Switch
-                                      checked={field.value}
-                                      onCheckedChange={field.onChange}
-                                      disabled={isPending}
-                                    />
-                                  </FormControl>
-                                </FormItem>
-                              )}
-                            />
-                            {form.getValues("type") !== "TRUE_FALSE" && (
-                              <CircleMinus
-                                size={28}
-                                onClick={() => remove(index)}
-                                className="text-primary cursor-pointer text-rose-500"
-                              />
-                            )}
-                          </div>
-                        ))}
+          <ScrollArea className="h-full">
+            <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+              <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+                {/* QUESTION  */}
+                <Card x-chunk="dashboard-07-chunk-0">
+                  <CardHeader>
+                    <CardTitle>Question</CardTitle>
+                    <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-4">
+                      <div className="grid gap-3 col-span-2">
+                        <FormField
+                          control={form.control}
+                          name="examId"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>test</FormLabel>
+                              <Input {...field} disabled />
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="grid gap-3 col-span-2">
+                        <FormField
+                          control={form.control}
+                          name="type"
+                          render={({ field }) => (
+                            <FormItem className="space-y-3">
+                              <FormLabel>Type(MCQ MRQ T/F SAQ)</FormLabel>
+                              <FormControl>
+                                <RadioGroup
+                                  onValueChange={(values) => {
+                                    field.onChange(values);
+                                    handleTypeChange(values);
+                                  }}
+                                  defaultValue={question.type}
+                                  className="flex items-center justify-between"
+                                >
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="MCQ" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="MRQ" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="TRUE_FALSE" />
+                                    </FormControl>
+                                  </FormItem>
+                                  <FormItem>
+                                    <FormControl>
+                                      <RadioGroupItem value="SHORT_ANSWER" />
+                                    </FormControl>
+                                  </FormItem>
+                                </RadioGroup>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
 
-                      {form.getValues("type") !== "TRUE_FALSE" && (
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          className="mt-2"
-                          onClick={() =>
-                            append({ answer: "", isCorrect: false })
-                          }
-                          disabled={isPending}
-                        >
-                          Add Answer
-                        </Button>
-                      )}
-                    </>
-                  ) : (
-                    <div className="flex flex-col gap-4">
-                      <FormField
-                        control={form.control}
-                        name={`answers.0.answer`}
-                        render={({ field }) => (
-                          <FormItem className="w-full">
-                            <FormControl>
-                              <Textarea {...field} disabled={isPending} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      <div className="grid gap-3 col-span-4">
+                        <FormField
+                          control={form.control}
+                          name="question"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Question</FormLabel>
+                              <FormControl>
+                                <Textarea
+                                  {...field}
+                                  disabled={isPending}
+                                  className="min-h-[120px]"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-            {/* IMAGE & explanation  */}
-            <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-              <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
-                <CardHeader>
-                  <CardTitle>Question Images</CardTitle>
-                  <CardDescription>
-                    Lipsum dolor sit amet, consectetur adipiscing elit
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <FormField
-                    control={form.control}
-                    name="image"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <ImageUpload
-                            value={field.value || ""}
-                            onChange={field.onChange}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-              </Card>
-              <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
-                <CardHeader>
-                  <CardTitle>Explanation</CardTitle>
-                  <CardDescription>Explanation the answer</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-6 sm:grid-cols-4">
-                    <div className="grid gap-3 col-span-4">
-                      <FormField
-                        control={form.control}
-                        name="explanation"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Textarea
-                                {...field}
-                                disabled={isPending}
-                                className="min-h-28"
+                  </CardContent>
+                </Card>
+                {/* ANSWER  */}
+                <Card x-chunk="dashboard-07-chunk-1">
+                  <CardHeader>
+                    <CardTitle>Answers</CardTitle>
+                    <CardDescription>This is answer form</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {form.getValues("type") !== "SHORT_ANSWER" ? (
+                      <>
+                        <div className="flex flex-col gap-4">
+                          {fields.map((field, index) => (
+                            <div
+                              className="flex items-center gap-4 grid-cols-4"
+                              key={field.id}
+                            >
+                              <FormField
+                                control={form.control}
+                                name={`answers.${index}.answer`}
+                                render={({ field }) => (
+                                  <FormItem className="w-full">
+                                    <FormControl>
+                                      <Textarea
+                                        {...field}
+                                        disabled={isPending}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
                               />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
+                              <FormField
+                                control={form.control}
+                                name={`answers.${index}.isCorrect`}
+                                render={({ field }) => (
+                                  <FormItem className="col-span-1">
+                                    <FormControl>
+                                      <Switch
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        disabled={isPending}
+                                      />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+                              {form.getValues("type") !== "TRUE_FALSE" && (
+                                <CircleMinus
+                                  size={28}
+                                  onClick={() => remove(index)}
+                                  className="text-primary cursor-pointer text-rose-500"
+                                />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        {form.getValues("type") !== "TRUE_FALSE" && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="mt-2"
+                            onClick={() =>
+                              append({ answer: "", isCorrect: false })
+                            }
+                            disabled={isPending}
+                          >
+                            Add Answer
+                          </Button>
                         )}
-                      />
+                      </>
+                    ) : (
+                      <div className="flex flex-col gap-4">
+                        <FormField
+                          control={form.control}
+                          name={`answers.0.answer`}
+                          render={({ field }) => (
+                            <FormItem className="w-full">
+                              <FormControl>
+                                <Textarea {...field} disabled={isPending} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+              {/* IMAGE & explanation  */}
+              <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+                <Card
+                  className="overflow-hidden"
+                  x-chunk="dashboard-07-chunk-4"
+                >
+                  <CardHeader>
+                    <CardTitle>Question Images</CardTitle>
+                    <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <FormField
+                      control={form.control}
+                      name="image"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <ImageUpload
+                              value={field.value || ""}
+                              onChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+                <Card
+                  className="overflow-hidden"
+                  x-chunk="dashboard-07-chunk-4"
+                >
+                  <CardHeader>
+                    <CardTitle>Explanation</CardTitle>
+                    <CardDescription>Explanation the answer</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-4">
+                      <div className="grid gap-3 col-span-4">
+                        <FormField
+                          control={form.control}
+                          name="explanation"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Textarea
+                                  {...field}
+                                  disabled={isPending}
+                                  className="min-h-28"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          </div>
+          </ScrollArea>
           {/* SM BUTTON  */}
           <div className="flex items-center justify-center gap-2 md:hidden">
             <Button

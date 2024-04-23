@@ -1,5 +1,4 @@
 import { getQuestionWithAnswersById } from "@/data/question";
-import NewQuestionForm from "../../new/new-question-form";
 import EditQuestionForm from "../../@modal/(.)edit/[id]/edit-question-form";
 
 interface QuestionIdPageProps {

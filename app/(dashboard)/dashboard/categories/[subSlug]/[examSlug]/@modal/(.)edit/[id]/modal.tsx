@@ -8,7 +8,7 @@ function Modal({ children }: { children: React.ReactNode }) {
 
   return (
     <Dialog open onOpenChange={() => router.back()}>
-      <DialogContent className="h-full max-h-[90%] min-w-[80%] bg-primary-foreground">
+      <DialogContent className="h-full max-h-[90%] min-w-[80%] bg-primary-foreground overflow-hidden">
         {children}
       </DialogContent>
     </Dialog>
