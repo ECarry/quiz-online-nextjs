@@ -8,6 +8,7 @@ interface CardProps {
   selected?: boolean;
   onClick: () => void;
   onInput: (value: string) => void;
+  inputValue?: string;
   shortcut: number;
   status?: "correct" | "wrong" | "none" | "complate";
   disabled?: boolean;
@@ -20,6 +21,7 @@ const Card = ({
   selected,
   onClick,
   onInput,
+  inputValue,
   status,
   disabled,
   type,
@@ -29,7 +31,7 @@ const Card = ({
     <>
       {type === "SHORT_ANSWER" ? (
         <div>
-          <Input onChange={(e) => onInput(e.target.value)} />
+          <Input onChange={(e) => onInput(e.target.value)} value={inputValue} />
         </div>
       ) : (
         <div

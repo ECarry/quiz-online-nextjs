@@ -50,14 +50,16 @@ const Footer = ({ onCheck, status, disabled, onShowAnswer }: FooterProps) => {
           {status === "wrong" && "Retry"}
           {status === "complate" && "Back"}
         </Button>
-        <Button
-          variant="outline"
-          className="ml-2"
-          onClick={onShowAnswer}
-          disabled={status === "correct"}
-        >
-          🔍
-        </Button>
+        {status !== "complate" && (
+          <Button
+            variant="outline"
+            className="ml-2"
+            onClick={onShowAnswer}
+            disabled={status === "correct"}
+          >
+            🔍
+          </Button>
+        )}
       </div>
     </footer>
   );
