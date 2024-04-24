@@ -41,7 +41,7 @@ const Footer = ({ onCheck, status, disabled, onShowAnswer }: FooterProps) => {
         )}
         <Button
           disabled={disabled}
-          className="ml-auto"
+          className="ml-auto w-[100px]"
           onClick={onCheck}
           variant={status === "wrong" ? "destructive" : "default"}
         >

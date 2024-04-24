@@ -7,6 +7,7 @@ import {
   CreateExamSchema,
   NewQuestionSchema,
   UpdateExplanationSchema,
+  UpdateQuestionSchema,
 } from "@/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -260,9 +261,65 @@ export const updateExplanation = async (
       },
     });
 
-    revalidatePath("/quiz");
+    //revalidatePath("/quiz");
 
     return { success: "Explanation updated." };
+  } catch (error) {
+    console.log(error);
+
+    return { error: "Something wrong" };
+  }
+};
+
+export const updateQuestion = async (
+  values: z.infer<typeof UpdateQuestionSchema>
+) => {
+  const validatedFields = UpdateQuestionSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const existingQuestion = await db.question.findUnique({
+    where: { id: values.id },
+  });
+
+  if (!existingQuestion) {
+    return { error: "Question not found." };
+  }
+
+  if (values.answers) {
+    try {
+      await db.answer.deleteMany({
+        where: { questionId: values.id },
+      });
+
+      const answersToCreate = values.answers.map((answer) => ({
+        answer: answer.answer,
+        isCorrect: answer.isCorrect,
+        questionId: existingQuestion.id,
+      }));
+
+      await db.answer.createMany({
+        data: answersToCreate,
+      });
+    } catch (error) {
+      console.log(error);
+      return { error: "Something wrong" };
+    }
+  }
+
+  try {
+    await db.question.update({
+      where: { id: values.id },
+      data: {
+        question: values.question,
+        type: values.type,
+        image: values.image,
+        explanation: values.explanation,
+      },
+    });
+    return { success: "Question updated." };
   } catch (error) {
     console.log(error);
 

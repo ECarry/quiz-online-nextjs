@@ -114,3 +114,13 @@ export const UpdateExplanationSchema = z.object({
   id: z.string().optional(),
   explanation: z.string().optional(),
 });
+
+export const UpdateQuestionSchema = z.object({
+  id: z.string(),
+  question: z.string().optional(),
+  type: z.enum(["MCQ", "MRQ", "TRUE_FALSE", "SHORT_ANSWER"]).optional(),
+  image: z.string().optional(),
+  explanation: z.string().optional(),
+  examId: z.string().optional(),
+  answers: z.array(AnswerSchema).optional(),
+});
