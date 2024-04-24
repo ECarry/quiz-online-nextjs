@@ -109,3 +109,8 @@ export const ExamWithQuestionSchema = z.object({
     )
     .optional(),
 });
+
+export const UpdateExplanationSchema = z.object({
+  id: z.string().optional(),
+  explanation: z.string().optional(),
+});

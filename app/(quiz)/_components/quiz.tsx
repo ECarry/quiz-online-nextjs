@@ -14,6 +14,8 @@ import Footer from "./footer";
 
 import Tip from "./tip";
 import Confetti from "react-confetti";
+import Explanation from "./explanation";
+import { useCurrentRole } from "@/hooks/user-current-role";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -33,6 +35,7 @@ const Quiz = ({ questions }: Props) => {
   const [status, setStatus] = useState<
     "none" | "correct" | "wrong" | "complate"
   >("none");
+  const role = useCurrentRole();
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData?.answers || [];
@@ -83,15 +86,16 @@ const Quiz = ({ questions }: Props) => {
 
     if (currentQuestionData.type === "MRQ") {
       if (selectedOptions.length === 0) return;
+
       const correctOptions = answers.filter(
         (answer) => answer.isCorrect === true
       );
 
-      const isCorrect = selectedOptions.every((option) => {
-        return correctOptions.find(
-          (correctOption) => correctOption.id === option
-        );
-      });
+      const correctOptionIds = correctOptions.map((option) => option.id);
+
+      const isCorrect =
+        correctOptionIds.length === selectedOptions.length &&
+        correctOptionIds.every((option) => selectedOptions.includes(option));
 
       if (isCorrect) {
         setStatus("correct");
@@ -218,6 +222,14 @@ const Quiz = ({ questions }: Props) => {
             <Tip content={currentQuestionData.explanation} />
           )}
         </div>
+        {role === "ADMIN" && (
+          <div className="absolute bottom-8 right-8">
+            <Explanation
+              id={currentQuestionData.id}
+              explanation={currentQuestionData.explanation}
+            />
+          </div>
+        )}
       </div>
       <Footer
         onShowAnswer={handleShowAnswer}

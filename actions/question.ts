@@ -6,6 +6,7 @@ import {
   CreateCategorySchema,
   CreateExamSchema,
   NewQuestionSchema,
+  UpdateExplanationSchema,
 } from "@/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -231,5 +232,40 @@ export const deleteQuestion = async (questionId: string) => {
   } catch (error) {
     console.log(error);
     return { error: "Something wrong." };
+  }
+};
+
+export const updateExplanation = async (
+  values: z.infer<typeof UpdateExplanationSchema>
+) => {
+  const validatedFields = UpdateExplanationSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const existingQuestion = await db.question.findUnique({
+    where: { id: values.id },
+  });
+
+  if (!existingQuestion) {
+    return { error: "Question not found." };
+  }
+
+  try {
+    await db.question.update({
+      where: { id: values.id },
+      data: {
+        explanation: values.explanation,
+      },
+    });
+
+    revalidatePath("/quiz");
+
+    return { success: "Explanation updated." };
+  } catch (error) {
+    console.log(error);
+
+    return { error: "Something wrong" };
   }
 };
