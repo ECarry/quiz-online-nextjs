@@ -56,6 +56,7 @@ const Hero = () => {
           </Link>
         </motion.div>
       </div>
+      {/* RIGHT CONTENT  */}
       <div className="relative w-full h-full hidden xl:block">
         <motion.div
           initial={{ opacity: 0.0, y: -200, x: -200 }}
