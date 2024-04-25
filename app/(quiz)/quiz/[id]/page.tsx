@@ -1,5 +1,6 @@
 import { getQuestionsByExamId } from "@/data/question";
 import Quiz from "../../_components/quiz";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: {
@@ -11,7 +12,7 @@ const QuizPage = async ({ params }: Props) => {
   const questions = await getQuestionsByExamId(params.id);
 
   if (!questions || questions.length === 0) {
-    return <div>404</div>;
+    return notFound();
   }
 
   // random question
