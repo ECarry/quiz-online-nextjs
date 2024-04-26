@@ -9,6 +9,8 @@ import { DataTableViewOptions } from "./data-table-view-options";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LucidePlusCircle } from "lucide-react";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { types } from "./data";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -33,6 +35,13 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
+        {table.getColumn("type") && (
+          <DataTableFacetedFilter
+            column={table.getColumn("type")}
+            title="Type"
+            options={types}
+          />
+        )}
         {isFiltered && (
           <Button
             variant="ghost"

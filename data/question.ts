@@ -115,12 +115,22 @@ export const getExamBySlugWithQuestion = async (slug: string) => {
       where: {
         slug: slug,
       },
-      include: {
-        questions: true,
+    });
+
+    if (!exam) {
+      return null;
+    }
+
+    const questions = await db.question.findMany({
+      where: {
+        examId: exam.id,
+      },
+      orderBy: {
+        question: "asc",
       },
     });
 
-    return exam;
+    return questions;
   } catch (error) {
     console.log(error);
   }

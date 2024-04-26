@@ -8,13 +8,11 @@ interface Props {
   };
 }
 const page = async ({ params }: Props) => {
-  const exam = await getExamBySlugWithQuestion(params.examSlug);
+  const questions = await getExamBySlugWithQuestion(params.examSlug);
 
-  if (!exam) {
-    return null;
+  if (!questions) {
+    return <div>404</div>;
   }
-
-  const questions = exam.questions;
 
   return (
     <div className="w-full h-full">
