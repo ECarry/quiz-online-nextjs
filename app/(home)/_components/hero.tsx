@@ -7,8 +7,8 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 pb-40">
-      <div className="flex flex-col items-start px-8 xl:px-2 2xl:px-0 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-40">
+      <div className="flex flex-col items-start px-8 lg:px-2 2xl:px-0 gap-8">
         <motion.div
           initial={{ opacity: 0.0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ const Hero = () => {
         </motion.div>
       </div>
       {/* RIGHT CONTENT  */}
-      <div className="relative w-full h-full hidden xl:block">
+      <div className="relative w-full h-full hidden lg:block">
         <motion.div
           initial={{ opacity: 0.0, y: -200, x: -200 }}
           //animate={{ opacity: 1, y: 0, x: 0 }}
