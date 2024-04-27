@@ -220,3 +220,23 @@ export const getQuestionWithAnswersById = async (id: string) => {
     return null;
   }
 };
+
+export const getQuestionByIds = async (ids: string[]) => {
+  try {
+    const questions = await db.question.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      include: {
+        answers: true,
+      },
+    });
+
+    return questions;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

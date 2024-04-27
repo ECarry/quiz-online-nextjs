@@ -1,10 +1,16 @@
 import BackButton from "@/components/back-button";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getMistakeQuestions } from "@/data/question";
+import { getMistakeQuestions, getQuestionByIds } from "@/data/question";
 
 const MistakesPage = async () => {
   const questions = await getMistakeQuestions();
+
+  const mistakeQuestionsId = questions?.map((question) => question.question.id);
+
+  if (!mistakeQuestionsId) return null;
+
+  const mistakeQuestions = await getQuestionByIds(mistakeQuestionsId);
 
   return (
     <div className="p-6 w-full">

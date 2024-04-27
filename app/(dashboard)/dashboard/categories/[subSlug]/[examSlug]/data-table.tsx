@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,7 +26,6 @@ import {
 } from "@/components/ui/table";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
-import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
