@@ -10,7 +10,8 @@ export type ModalType =
   | "createExam"
   | "editCategory"
   | "exit"
-  | "editQuestion";
+  | "editQuestion"
+  | "addCover";
 
 interface ModalData {
   id?: string;

@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { Badge } from "@/components/ui/badge";
 import { labels, types } from "./data";
+import { DataTableColumnHeader } from "./data-table-column-header";
 
 export type Payment = {
   type: string;
@@ -27,7 +28,9 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "type",
-    header: "Type",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Type" />
+    ),
     cell: ({ row }) => {
       const type = types.find((type) => type.value === row.getValue("type"));
 

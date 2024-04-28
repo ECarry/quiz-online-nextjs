@@ -7,6 +7,7 @@ import CreateExamModal from "../modals/create-exam-modal";
 import EditCategoryModal from "../modals/edit-category-modal";
 import ExitModal from "../modals/exit-modal";
 import { EditQuestionModal } from "../modals/edit-question-modal";
+import AddCoverModal from "../modals/add-cover-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -26,6 +27,7 @@ export const ModalProvider = () => {
       <EditCategoryModal />
       <ExitModal />
       <EditQuestionModal />
+      <AddCoverModal />
     </>
   );
 };

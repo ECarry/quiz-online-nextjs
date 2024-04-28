@@ -65,8 +65,7 @@ model User {
 model Post {
   id          String   @id @default(cuid())
   title       String
-  slug        String   @unique
-  content     Json?    @db.Json
+  content     String?  @db.Text
   postImage   String?  @db.Text
   description String?  @db.Text
   tags        String[]

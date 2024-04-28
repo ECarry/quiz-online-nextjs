@@ -33,7 +33,7 @@ export const types = [
   },
   {
     value: "TRUE_FALSE",
-    label: "TRUE/FALSE",
+    label: "TRUE FALSE",
     icon: GoQuestion,
   },
   {

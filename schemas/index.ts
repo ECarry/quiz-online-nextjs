@@ -56,9 +56,6 @@ export const NewPostSchema = z.object({
   title: z.string().min(1, {
     message: "Title must be required",
   }),
-  slug: z.string().min(1, {
-    message: "Slug must be required",
-  }),
   content: z.string().optional(),
   postImage: z.string().optional(),
   description: z.string().optional(),

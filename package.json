@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.5.2",
-    "@blocknote/core": "^0.9.4",
-    "@blocknote/react": "^0.9.4",
+    "@blocknote/core": "^0.12.4",
+    "@blocknote/react": "^0.12.4",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -54,6 +54,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "react-icons": "^5.0.1",
+    "react-textarea-autosize": "^8.5.3",
     "react-use": "^17.5.0",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
