@@ -68,7 +68,7 @@ const PostForm = ({ post, preview }: PostFormProps) => {
           />
         )}
       </div>
-      {!post.postImage && (
+      {!post.postImage && !preview && (
         <Button
           className="text-muted-foreground text-xs w-[120px]"
           variant="outline"
@@ -96,7 +96,11 @@ const PostForm = ({ post, preview }: PostFormProps) => {
           {post.title}
         </div>
       )}
-      <Editor onChange={onChange} initialContent={content || ""} />
+      <Editor
+        onChange={onChange}
+        initialContent={content || ""}
+        editable={!preview}
+      />
     </div>
   );
 };
