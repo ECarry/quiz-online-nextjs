@@ -1,7 +1,9 @@
 "use client";
 
-import { newUndefinedPost } from "@/actions/post";
 import { useRouter } from "next/navigation";
+
+import { newUndefinedPost } from "@/actions/post";
+import { Button } from "@/components/ui/button";
 
 const NewPost = () => {
   const router = useRouter();
@@ -10,13 +12,13 @@ const NewPost = () => {
     newUndefinedPost().then((data) => {
       if (data.success) {
         const post = data.post;
-        router.push(`/dashboard/posts/new/${post.id}`);
+        router.push(`/dashboard/posts/${post.id}`);
       }
     });
   };
   return (
     <div>
-      <button onClick={onClink}>New Post</button>
+      <Button onClick={onClink}>New Post</Button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import PostForm from "@/app/(dashboard)/dashboard/posts/new/[id]/post-form";
+import PostForm from "@/app/(dashboard)/dashboard/posts/[id]/post-form";
 import { getPostById } from "@/data/posts";
 import { notFound } from "next/navigation";
 
