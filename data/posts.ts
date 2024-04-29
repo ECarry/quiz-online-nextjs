@@ -2,7 +2,14 @@ import { db } from "@/lib/db";
 
 export const getPosts = async () => {
   try {
-    const posts = await db.post.findMany({});
+    const posts = await db.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        user: true,
+      }
+    });
 
     return posts;
   } catch (error) {
