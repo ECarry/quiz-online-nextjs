@@ -13,7 +13,7 @@ interface PostListItemProps {
 
 const PostListItem = ({ post }: PostListItemProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-950">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-black/90">
       <div className="flex items-center p-4">
         <Avatar>
           <AvatarImage

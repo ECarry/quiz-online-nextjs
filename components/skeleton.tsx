@@ -25,3 +25,22 @@ export const MainPageSkeleton = () => {
     </div>
   );
 };
+
+export const PostListPageSkeleton = () => {
+  return (
+    <section className="grid grid-cols-1 gap-6 p-4 md:p-6">
+      {Array.from(Array(8).keys()).map((_, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-2 bg-white rounded-lg shadow-md overflow-hidden dark:bg-black/90 p-4"
+        >
+          <Skeleton className="size-10 rounded-full" />
+          <div className="flex flex-col gap-1">
+            <Skeleton className="h-7 w-[500px]" />
+            <Skeleton className="h-3 w-[150px]" />
+          </div>
+        </div>
+      ))}
+    </section>
+  );
+};

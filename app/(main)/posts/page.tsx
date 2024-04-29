@@ -3,6 +3,9 @@ import { getPosts } from "@/data/posts";
 import PostListItem from "../_components/post-list-item";
 
 const PostsPage = async () => {
+  // delay 500ms
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const posts = await getPosts();
 
   return (
