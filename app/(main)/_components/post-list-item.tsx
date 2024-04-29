@@ -34,13 +34,6 @@ const PostListItem = ({ post }: PostListItemProps) => {
           </p>
         </div>
       </div>
-      <div className="p-4">
-        <p className="text-gray-700 dark:text-gray-300">
-          Discover the secrets to creating responsive websites that adapt
-          seamlessly to any device. Learn the latest techniques and best
-          practices for building mobile-friendly designs.
-        </p>
-      </div>
     </div>
   );
 };
