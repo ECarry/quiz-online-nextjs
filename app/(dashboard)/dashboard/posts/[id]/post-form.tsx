@@ -90,7 +90,7 @@ const PostForm = ({ post, preview }: PostFormProps) => {
         />
       ) : (
         <div
-          className="text-5xl font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF]"
+          className="text-2xl md:text-5xl px-4 font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF]"
           onClick={enableInput}
         >
           {post.title}
