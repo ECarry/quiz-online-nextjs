@@ -28,7 +28,7 @@ export default function ThemeToggle() {
         className="w-full"
         onClick={() => setTheme("dark")}
       >
-        <Moon className="h-5 w-5" />
+        <span className="size-5">🌙</span>
       </Button>
       <Button
         variant={theme === "light" ? "default" : "outline"}
@@ -36,7 +36,7 @@ export default function ThemeToggle() {
         className="w-full"
         onClick={() => setTheme("light")}
       >
-        <Sun className="h-5 w-5" />
+        <span className="size-5">☀️</span>
       </Button>
       <Button
         variant={theme === "system" ? "default" : "outline"}
@@ -44,7 +44,7 @@ export default function ThemeToggle() {
         className="w-full"
         onClick={() => setTheme("system")}
       >
-        <Monitor className="h-5 w-5" />
+        <span className="size-5">💻</span>
       </Button>
     </div>
   );
