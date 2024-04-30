@@ -288,6 +288,26 @@ export const updateQuestion = async (
     return { error: "Question not found." };
   }
 
+  const existingExam = await db.exam.findUnique({
+    where: { id: values.examId },
+  });
+
+  if (!existingExam) {
+    return { error: "Exam not found." };
+  }
+
+  if (!existingExam.subjectId) {
+    return { error: "Exam not found." };
+  }
+
+  const existingSubject = await db.subject.findUnique({
+    where: { id: existingExam.subjectId },
+  });
+
+  if (!existingSubject) {
+    return { error: "Subject not found." };
+  }
+
   if (values.answers) {
     try {
       await db.answer.deleteMany({
@@ -319,6 +339,7 @@ export const updateQuestion = async (
         explanation: values.explanation,
       },
     });
+
     return { success: "Question updated." };
   } catch (error) {
     console.log(error);

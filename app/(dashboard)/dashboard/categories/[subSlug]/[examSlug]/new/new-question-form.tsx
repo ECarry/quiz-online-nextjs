@@ -223,7 +223,7 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
                   className="w-[100px]"
                 >
                   {isPending ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
                     <span>Save Question</span>
                   )}
@@ -483,9 +483,14 @@ const NewQuestionForm = ({ examId, examName }: Props) => {
               >
                 Discard
               </Button>
-              <Button size="sm" type="submit" disabled={isPending}>
+              <Button
+                size="sm"
+                type="submit"
+                disabled={isPending}
+                className="w-[100px]"
+              >
                 {isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <span>Save Question</span>
                 )}

@@ -36,7 +36,7 @@ export const PostListPageSkeleton = () => {
         >
           <Skeleton className="size-10 rounded-full" />
           <div className="flex flex-col gap-1">
-            <Skeleton className="h-7 w-[500px]" />
+            <Skeleton className="h-7 w-[300px] md:w-[500px]" />
             <Skeleton className="h-3 w-[150px]" />
           </div>
         </div>

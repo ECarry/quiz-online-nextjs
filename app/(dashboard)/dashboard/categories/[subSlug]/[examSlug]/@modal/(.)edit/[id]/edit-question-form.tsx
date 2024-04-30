@@ -4,7 +4,7 @@ import * as z from "zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -142,7 +142,7 @@ const EditQuestionForm = ({ question, answers }: EditQuestionFormProps) => {
                 className="w-[100px]"
               >
                 {isPending ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <span>Save Question</span>
                 )}
@@ -417,9 +417,14 @@ const EditQuestionForm = ({ question, answers }: EditQuestionFormProps) => {
             >
               Discard
             </Button>
-            <Button size="sm" type="submit" disabled={isPending}>
+            <Button
+              size="sm"
+              type="submit"
+              disabled={isPending}
+              className="w-[100px]"
+            >
               {isPending ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <span>Save Question</span>
               )}
