@@ -3,19 +3,21 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoutes = [
-  "/",
-  "/about",
-  "/auth/new-verification",
-  `/server/all`,
-];
+export const publicRoutes = ["/"];
 
 /**
  * An array of routes that are accessible to the protecte
  * These routes require authentication
  * @type {string[]}
  */
-export const protectedRoutes = ["/main", "/dashboard", "/quiz"];
+export const protectedRoutes = [
+  "/main",
+  "/dashboard",
+  "/quiz",
+  "/posts",
+  "/practice",
+  "/profile",
+];
 
 /**
  * An array of routes that are accessible to the protecte

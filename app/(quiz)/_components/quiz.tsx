@@ -99,6 +99,7 @@ const Quiz = ({ questions }: Props) => {
 
       if (isCorrect) {
         setStatus("correct");
+        setInputValue("");
       } else {
         setStatus("wrong");
         addWrongQuestion(currentQuestionData.id).then((data) => {

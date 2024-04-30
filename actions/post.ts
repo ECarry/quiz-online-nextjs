@@ -104,6 +104,8 @@ export const updatePost = async (id: string, content: string) => {
       },
     });
 
+    console.log("Update successful!");
+
     return { success: "Update successful!" };
   } catch (error) {
     console.log(error);
