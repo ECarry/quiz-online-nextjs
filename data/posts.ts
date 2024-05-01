@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/lib/db";
 
 export const getPosts = async () => {
@@ -8,7 +10,7 @@ export const getPosts = async () => {
       },
       include: {
         user: true,
-      }
+      },
     });
 
     return posts;

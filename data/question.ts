@@ -1,6 +1,7 @@
+"use server";
+
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { getUserByEmail, getUserById } from "./user";
 
 export const getCategory = async () => {
   try {
