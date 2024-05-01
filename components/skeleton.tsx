@@ -44,3 +44,16 @@ export const PostListPageSkeleton = () => {
     </section>
   );
 };
+
+export const PracticePageSkeleton = () => {
+  return (
+    <div className="p-6 flex flex-col gap-4">
+      <Skeleton className="h-8 w-[300px]" />
+      <div className="flex flex-col gap-4">
+        <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
+      </div>
+    </div>
+  );
+};
