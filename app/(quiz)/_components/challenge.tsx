@@ -7,7 +7,7 @@ interface ChallengeProps {
   onSelect: (id: string) => void;
   onInput: (value: string) => void;
   inputValue?: string;
-  status: "correct" | "wrong" | "none" | "complate";
+  status: "correct" | "wrong" | "none" | "complete";
   selectedOption?: string;
   selectedOptions?: string[];
   disabled?: boolean;

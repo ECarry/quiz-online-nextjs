@@ -5,7 +5,7 @@ import { CheckCircle, XCircle } from "lucide-react";
 interface FooterProps {
   onShowAnswer?: () => void;
   onCheck: () => void;
-  status: "correct" | "wrong" | "none" | "complate";
+  status: "correct" | "wrong" | "none" | "complete";
   disabled?: boolean;
 }
 
@@ -48,12 +48,13 @@ const Footer = ({ onCheck, status, disabled, onShowAnswer }: FooterProps) => {
           {status === "none" && "Check"}
           {status === "correct" && "Next"}
           {status === "wrong" && "Retry"}
-          {status === "complate" && "Back"}
+          {status === "complete" && "Back"}
         </Button>
-        {status !== "complate" && (
+        {status !== "complete" && (
           <Button
             variant="outline"
             className="ml-2"
+            size="icon"
             onClick={onShowAnswer}
             disabled={status === "correct"}
           >

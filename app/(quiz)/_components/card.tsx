@@ -10,7 +10,7 @@ interface CardProps {
   onInput: (value: string) => void;
   inputValue?: string;
   shortcut: number;
-  status?: "correct" | "wrong" | "none" | "complate";
+  status?: "correct" | "wrong" | "none" | "complete";
   disabled?: boolean;
   type: QuestionType;
 }

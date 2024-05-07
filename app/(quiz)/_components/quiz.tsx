@@ -33,7 +33,7 @@ const Quiz = ({ questions }: Props) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [status, setStatus] = useState<
-    "none" | "correct" | "wrong" | "complate"
+    "none" | "correct" | "wrong" | "complete"
   >("none");
   const role = useCurrentRole();
 
@@ -68,7 +68,7 @@ const Quiz = ({ questions }: Props) => {
     setInputValue(value);
   };
 
-  const onContiune = () => {
+  const onContinue = () => {
     if (status === "wrong") {
       setStatus("none");
       setSelectedOption(undefined);
@@ -163,7 +163,7 @@ const Quiz = ({ questions }: Props) => {
         </div>
         <Footer
           onCheck={() => router.push("/main")}
-          status={"complate"}
+          status={"complete"}
           disabled={false}
         />
       </>
@@ -234,7 +234,7 @@ const Quiz = ({ questions }: Props) => {
       </div>
       <Footer
         onShowAnswer={handleShowAnswer}
-        onCheck={onContiune}
+        onCheck={onContinue}
         status={status}
         disabled={disabledCheckBtn()}
       />
