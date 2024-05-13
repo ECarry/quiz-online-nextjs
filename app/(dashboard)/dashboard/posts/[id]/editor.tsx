@@ -32,12 +32,23 @@ const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     uploadFile: handleUpload,
   });
 
+  // Throttle fn
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  const throttleUpdate = (func: () => void, delay: number) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(func, delay);
+  };
+
   return (
     <div className="">
       <BlockNoteView
         editable={editable}
         editor={editor}
-        onChange={() => onChange(JSON.stringify(editor.document))}
+        onChange={() =>
+          throttleUpdate(() => onChange(JSON.stringify(editor.document)), 3000)
+        }
         theme={resolvedTheme === "dark" ? "dark" : "light"}
       />
     </div>

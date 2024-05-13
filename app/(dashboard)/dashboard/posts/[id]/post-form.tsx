@@ -52,7 +52,9 @@ const PostForm = ({ post, preview }: PostFormProps) => {
   };
 
   const onChange = (content: string) => {
-    updatePost(id, content).then((data) => {});
+    updatePost(id, content).then((data) => {
+      console.log(data);
+    });
   };
 
   return (
