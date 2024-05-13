@@ -12,6 +12,8 @@
     "@auth/prisma-adapter": "^1.5.2",
     "@blocknote/core": "^0.12.4",
     "@blocknote/react": "^0.12.4",
+    "@edgestore/react": "^0.1.6",
+    "@edgestore/server": "^0.1.6",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -60,7 +62,7 @@
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.7.0",
-    "zod": "^3.22.4",
+    "zod": "^3.23.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

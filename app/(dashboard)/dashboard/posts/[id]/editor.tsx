@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { useCreateBlockNote, BlockNoteView } from "@blocknote/react";
 import "@blocknote/react/style.css";
-import { uploadImage } from "@/actions/image";
+import { useEdgeStore } from "@/lib/edgestore";
 
 interface EditorProps {
   onChange: (value: string) => void;
@@ -15,11 +15,14 @@ interface EditorProps {
 
 const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   const { resolvedTheme } = useTheme();
+  const { edgestore } = useEdgeStore();
 
   const handleUpload = async (file: File) => {
-    const url = await uploadImage(file);
+    const res = await edgestore.publicFiles.upload({
+      file,
+    });
 
-    return url;
+    return res.url;
   };
 
   const editor: BlockNoteEditor = useCreateBlockNote({

@@ -10,6 +10,7 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { Toaster } from "@/components/ui/toaster";
+import { EdgeStoreProvider } from "../lib/edgestore";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,7 +38,9 @@ export default async function RootLayout({
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <SessionProvider session={session}>
           <ThemeProvider attribute="class" defaultTheme="system">
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            </TooltipProvider>
             <ModalProvider />
             <Toaster />
           </ThemeProvider>
