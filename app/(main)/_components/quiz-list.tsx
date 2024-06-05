@@ -9,7 +9,7 @@ interface Props {
   items: TestWithQuestions[] | undefined;
 }
 
-const QuizsList = ({ items }: Props) => {
+const QuizList = ({ items }: Props) => {
   return (
     <div>
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
@@ -24,11 +24,11 @@ const QuizsList = ({ items }: Props) => {
       </div>
       {items?.length === 0 && (
         <div className="text-center text-sm text-muted-foreground mt-10">
-          Ooops! No quizs found
+          Ooops! No quiz found
         </div>
       )}
     </div>
   );
 };
 
-export default QuizsList;
+export default QuizList;

@@ -1,6 +1,6 @@
 import { getCategory, getTestsWithQuestions } from "@/data/question";
 import Categories from "../_components/categories";
-import QuizsList from "../_components/quizs-list";
+import QuizList from "../_components/quiz-list";
 
 interface Props {
   params: {
@@ -21,7 +21,7 @@ const HomePage = async ({ params }: Props) => {
   return (
     <div className="p-6">
       <Categories items={categories} />
-      <QuizsList items={questions} />
+      <QuizList items={questions} />
     </div>
   );
 };

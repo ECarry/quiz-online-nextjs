@@ -139,7 +139,7 @@ export const getExamBySlugWithQuestion = async (slug: string) => {
 
 export const getTestsWithQuestions = async (id?: string) => {
   try {
-    const quizs = await db.exam.findMany({
+    const quiz = await db.exam.findMany({
       where: {
         subjectId: id,
         status: "PUBLIC",
@@ -149,7 +149,7 @@ export const getTestsWithQuestions = async (id?: string) => {
       },
     });
 
-    return quizs;
+    return quiz;
   } catch (error) {}
 };
 
@@ -161,6 +161,9 @@ export const getQuestionsByExamId = async (id: string) => {
       },
       include: {
         answers: true,
+      },
+      orderBy: {
+        question: "desc",
       },
     });
 

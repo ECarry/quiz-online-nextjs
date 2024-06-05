@@ -1,7 +1,7 @@
 "use client";
 
 import { Answer, Question } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { addWrongQuestion } from "@/actions/question";
 import { useWindowSize } from "react-use";
@@ -28,7 +28,14 @@ interface Props {
 const Quiz = ({ questions }: Props) => {
   const router = useRouter();
   const { width, height } = useWindowSize();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
+    const index = localStorage.getItem("currentQuestionIndex");
+    if (index) {
+      return parseInt(index);
+    }
+
+    return 0;
+  });
   const [selectedOption, setSelectedOption] = useState<string>();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
@@ -36,6 +43,14 @@ const Quiz = ({ questions }: Props) => {
     "none" | "correct" | "wrong" | "complete"
   >("none");
   const role = useCurrentRole();
+
+  useEffect(() => {
+    // save current quiz to local storage
+    localStorage.setItem(
+      "currentQuestionIndex",
+      JSON.stringify(currentQuestionIndex)
+    );
+  }, [currentQuestionIndex]);
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData?.answers || [];
