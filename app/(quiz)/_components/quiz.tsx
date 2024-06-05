@@ -239,7 +239,7 @@ const Quiz = ({ questions }: Props) => {
           )}
         </div>
         {role === "ADMIN" && (
-          <div className="absolute bottom-8 right-8">
+          <div className="absolute bottom-8 right-8 hidden lg:block">
             <Explanation
               id={currentQuestionData.id}
               explanation={currentQuestionData.explanation}
