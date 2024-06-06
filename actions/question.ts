@@ -209,6 +209,119 @@ export const addWrongQuestion = async (questionId: string) => {
   }
 };
 
+export const addWrongQuestionLife = async (questionId: string) => {
+  const user = await currentUser();
+  if (!user) {
+    return redirect("/auth/login");
+  }
+
+  if (!user.email) {
+    throw new Error("User not found");
+  }
+
+  const existingUser = await db.user.findUnique({
+    where: { email: user.email },
+  });
+
+  if (!existingUser) {
+    throw new Error("User not found");
+  }
+
+  const wrongQuestion = await db.wrongQuestion.findFirst({
+    where: {
+      questionId,
+    },
+  });
+
+  if (!wrongQuestion) {
+    return;
+  }
+
+  if (wrongQuestion.life === 0) {
+    return;
+  }
+
+  try {
+    await db.wrongQuestion.update({
+      where: {
+        id: wrongQuestion.id,
+      },
+      data: {
+        life: wrongQuestion.life ? wrongQuestion.life + 1 : 3,
+      },
+    });
+
+    revalidatePath("/practice/mistakes");
+
+    return { success: "Added life" };
+  } catch (error) {
+    console.log("Something wrong");
+  }
+};
+
+export const removeWrongQuestionLife = async (questionId: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    return redirect("/auth/login");
+  }
+
+  if (!user.email) {
+    throw new Error("User not found");
+  }
+
+  const existingUser = await db.user.findUnique({
+    where: { email: user.email },
+  });
+
+  if (!existingUser) {
+    throw new Error("User not found");
+  }
+
+  const wrongQuestion = await db.wrongQuestion.findFirst({
+    where: {
+      questionId,
+    },
+  });
+
+  if (!wrongQuestion) {
+    return;
+  }
+
+  if (wrongQuestion.life === 0) {
+    await db.wrongQuestion.delete({
+      where: {
+        id: wrongQuestion.id,
+      },
+    });
+  }
+
+  try {
+    const life = wrongQuestion.life;
+    if (life === 1) {
+      await db.wrongQuestion.delete({
+        where: {
+          id: wrongQuestion.id,
+        },
+      });
+    } else {
+      await db.wrongQuestion.update({
+        where: {
+          id: wrongQuestion.id,
+        },
+        data: {
+          life: life ? life - 1 : 3,
+        },
+      });
+    }
+    revalidatePath("/practice/mistakes");
+
+    return { success: "Removed life" };
+  } catch (error) {
+    console.log("Something wrong");
+  }
+};
+
 export const deleteQuestion = async (questionId: string) => {
   if (!questionId) {
     return { error: "Question id missing." };

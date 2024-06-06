@@ -144,7 +144,8 @@ model Answer {
 }
 
 model WrongQuestion {
-  id String @id @default(cuid())
+  id   String @id @default(cuid())
+  life Int?   @default(3)
 
   user   User   @relation(fields: [userId], references: [id])
   userId String

@@ -2,6 +2,7 @@ import BackButton from "@/components/back-button";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getMistakeQuestions, getQuestionByIds } from "@/data/question";
+import QuizDialog from "./quiz-dialog";
 
 const MistakesPage = async () => {
   const questions = await getMistakeQuestions();
@@ -18,9 +19,7 @@ const MistakesPage = async () => {
       <div className="flex items-center flex-col">
         <h1 className="text-[100px]">♾️</h1>
         <h2 className="text-2xl font-bold">复习最近的错题</h2>
-        <Button className="mt-4 w-1/3" size="lg">
-          开始
-        </Button>
+        <QuizDialog questions={mistakeQuestions ?? []} />
       </div>
       <Separator className="my-8" />
       <div className="space-y-4">

@@ -1,0 +1,41 @@
+import { Progress } from "@/components/ui/progress";
+import { useModal } from "@/hooks/use-modal-store";
+import { X } from "lucide-react";
+
+import { AnimatePresence, motion } from "framer-motion";
+
+interface Props {
+  current: number;
+  total: number;
+}
+
+const Header = ({ current, total }: Props) => {
+  const { onOpen } = useModal();
+
+  const progress = ((current + 1) / total) * 100;
+
+  return (
+    <header className="lg:pt-[50px] pt-[20px] px-10 flex gap-x-7 items-center justify-between mx-auto w-full">
+      <div></div>
+
+      <Progress value={progress} className="w-[50%] h-2 lg:h-3" />
+      <div className="text-center relative overflow-hidden flex items-center gap-1">
+        <AnimatePresence mode="popLayout">
+          <motion.span
+            key={current}
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "-100%" }}
+            transition={{ ease: "backIn", duration: 0.75 }}
+            className="block font-semibold text-lg"
+          >
+            {current + 1}
+          </motion.span>
+        </AnimatePresence>
+        /<span>{total}</span>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
