@@ -16,10 +16,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-black/90">
       <div className="flex items-center p-4">
         <Avatar>
-          <AvatarImage
-            alt="@jaredpalmer"
-            src={post.user.image || "/avatar.svg"}
-          />
+          <AvatarImage alt="avatar" src={post.user.image || "/avatar.svg"} />
           <AvatarFallback>{post.user.name?.substring(0, 2)}</AvatarFallback>
         </Avatar>
         <div className="ml-3">
@@ -29,9 +26,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
             </h3>
           </Link>
 
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
-            {formatDate(post.createdAt)}
-          </p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm"></p>
         </div>
       </div>
     </div>
