@@ -1,7 +1,7 @@
 "use client";
 
 import { Answer, Question } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addWrongQuestion } from "@/actions/question";
 import { useWindowSize } from "react-use";
@@ -36,14 +36,6 @@ const Quiz = ({ questions }: Props) => {
     "none" | "correct" | "wrong" | "complete"
   >("none");
   const role = useCurrentRole();
-
-  useEffect(() => {
-    // save current quiz to local storage
-    localStorage.setItem(
-      "currentQuestionIndex",
-      JSON.stringify(currentQuestionIndex)
-    );
-  }, [currentQuestionIndex]);
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData?.answers || [];
