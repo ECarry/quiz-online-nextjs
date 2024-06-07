@@ -1,9 +1,9 @@
 "use client";
 
 import { Answer, Question } from "@prisma/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { addWrongQuestion } from "@/actions/question";
 import { useWindowSize } from "react-use";
 
 import Header from "./header";
@@ -16,10 +16,6 @@ import Tip from "./tip";
 import Confetti from "react-confetti";
 import Explanation from "./explanation";
 import { useCurrentRole } from "@/hooks/user-current-role";
-import {
-  addWrongQuestionLife,
-  removeWrongQuestionLife,
-} from "@/actions/question";
 
 interface QuestionWithAnswer extends Question {
   answers: Answer[];
@@ -40,6 +36,14 @@ const Quiz = ({ questions }: Props) => {
     "none" | "correct" | "wrong" | "complete"
   >("none");
   const role = useCurrentRole();
+
+  useEffect(() => {
+    // save current quiz to local storage
+    localStorage.setItem(
+      "currentQuestionIndex",
+      JSON.stringify(currentQuestionIndex)
+    );
+  }, [currentQuestionIndex]);
 
   const currentQuestionData = questions[currentQuestionIndex];
   const answers = currentQuestionData?.answers || [];
@@ -81,9 +85,6 @@ const Quiz = ({ questions }: Props) => {
     }
 
     if (status === "correct") {
-      removeWrongQuestionLife(currentQuestionData.id).then((data) => {
-        console.log(data?.success);
-      });
       onNext();
       setStatus("none");
       setSelectedOption(undefined);
@@ -107,12 +108,9 @@ const Quiz = ({ questions }: Props) => {
       if (isCorrect) {
         setStatus("correct");
         setInputValue("");
-        removeWrongQuestionLife(currentQuestionData.id).then((data) => {
-          console.log(data?.success);
-        });
       } else {
         setStatus("wrong");
-        addWrongQuestionLife(currentQuestionData.id).then((data) => {
+        addWrongQuestion(currentQuestionData.id).then((data) => {
           console.log(data?.success);
         });
       }
@@ -122,12 +120,9 @@ const Quiz = ({ questions }: Props) => {
         currentQuestionData.answers[0].answer.toLowerCase()
       ) {
         setStatus("correct");
-        removeWrongQuestionLife(currentQuestionData.id).then((data) => {
-          console.log(data?.success);
-        });
       } else {
         setStatus("wrong");
-        addWrongQuestionLife(currentQuestionData.id).then((data) => {
+        addWrongQuestion(currentQuestionData.id).then((data) => {
           console.log(data?.success);
         });
       }
@@ -136,12 +131,9 @@ const Quiz = ({ questions }: Props) => {
 
       if (correctOption && correctOption.id === selectedOption) {
         setStatus("correct");
-        removeWrongQuestionLife(currentQuestionData.id).then((data) => {
-          console.log(data?.success);
-        });
       } else {
         setStatus("wrong");
-        addWrongQuestionLife(currentQuestionData.id).then((data) => {
+        addWrongQuestion(currentQuestionData.id).then((data) => {
           console.log(data?.success);
         });
       }

@@ -20,7 +20,7 @@ const PostListItem = ({ post }: PostListItemProps) => {
           <AvatarFallback>{post.user.name?.substring(0, 2)}</AvatarFallback>
         </Avatar>
         <div className="ml-3">
-          <Link href={`/posts/${post.id}`}>
+          <Link href={`/posts/${post.id}`} prefetch={false}>
             <h3 className="font-semibold text-lg hover:text-gray-600 transition-all dark:hover:text-gray-300">
               {post.title}
             </h3>

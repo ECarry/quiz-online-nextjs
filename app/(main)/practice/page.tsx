@@ -21,6 +21,30 @@ const PracticePage = async () => {
           link="/practice/collections"
           emoji="😎"
         />
+        <Card
+          title="单选题"
+          description="攻克单选。"
+          link="/practice/mcq"
+          emoji="☝️"
+        />
+        <Card
+          title="多选题"
+          description="攻克多选。"
+          link="/practice/mrq"
+          emoji="✌️"
+        />
+        <Card
+          title="判断题"
+          description="攻克判断。"
+          link="/practice/tf"
+          emoji="✅"
+        />
+        <Card
+          title="简答题"
+          description="攻克简答。"
+          link="/practice/sa"
+          emoji="🥸"
+        />
       </div>
     </div>
   );
