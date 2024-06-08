@@ -251,8 +251,6 @@ export const addWrongQuestionLife = async (questionId: string) => {
       },
     });
 
-    revalidatePath("/practice/mistakes");
-
     return { success: "Added life" };
   } catch (error) {
     console.log("Something wrong");
@@ -314,7 +312,6 @@ export const removeWrongQuestionLife = async (questionId: string) => {
         },
       });
     }
-    revalidatePath("/practice/mistakes");
 
     return { success: "Removed life" };
   } catch (error) {
