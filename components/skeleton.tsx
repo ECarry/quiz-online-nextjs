@@ -52,6 +52,10 @@ export const PracticePageSkeleton = () => {
       <div className="flex flex-col gap-4">
         <Skeleton className="h-[120px] w-full" />
         <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
+        <Skeleton className="h-[120px] w-full" />
       </div>
     </div>
   );
