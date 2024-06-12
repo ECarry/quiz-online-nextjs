@@ -41,6 +41,7 @@ const Quiz = ({ questions }: Props) => {
   const answers = currentQuestionData?.answers || [];
 
   const onNext = () => {
+    setInputValue("");
     setCurrentQuestionIndex((current) => current + 1);
   };
 
@@ -73,6 +74,7 @@ const Quiz = ({ questions }: Props) => {
       setStatus("none");
       setSelectedOption(undefined);
       setSelectedOptions([]);
+      setInputValue("");
       return;
     }
 
@@ -99,7 +101,6 @@ const Quiz = ({ questions }: Props) => {
 
       if (isCorrect) {
         setStatus("correct");
-        setInputValue("");
       } else {
         setStatus("wrong");
         addWrongQuestion(currentQuestionData.id).then((data) => {
