@@ -8,6 +8,7 @@ const getMCQ = cache(async () => {
   return await db.question.findMany({
     where: {
       type: "MCQ",
+      examId: "6613a35f5bade4c7aae31f3c",
     },
     include: {
       answers: true,
