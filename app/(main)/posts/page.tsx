@@ -1,18 +1,8 @@
-//import { getPosts } from "@/data/posts";
+import { getPosts } from "@/data/posts";
 import PostListItem from "../_components/post-list-item";
 import { unstable_cache as cache } from "next/cache";
-import { db } from "@/lib/db";
 
-const getCachePosts = cache(() => {
-  return db.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      user: true,
-    },
-  });
-});
+const getCachePosts = cache(() => getPosts(), [], { revalidate: 60 * 60 });
 
 const PostsPage = async () => {
   const posts = await getCachePosts();
